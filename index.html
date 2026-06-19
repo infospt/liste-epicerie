@@ -371,14 +371,15 @@
       font-size:13px;
     }
     .store-select {
-      min-width:96px;
-      max-width:115px;
-      padding:7px 6px;
-      border:1px solid var(--border);
+      min-width:118px;
+      max-width:135px;
+      padding:8px 7px;
+      border:1px solid var(--blue);
       border-radius:9px;
-      background:white;
+      background:#f7fbff;
       color:var(--dark);
       font-size:13px;
+      font-weight:700;
     }
     .store-name {
       font-size:12px;
@@ -818,7 +819,11 @@
           <input id="showArticleNames" type="checkbox">
           Afficher le choix du prénom à côté des articles
         </label>
-        <div class="settings-note">Par défaut, aucun nom n'est choisi sur les articles.</div>
+        <label class="settings-check">
+          <input id="showStoreSelect" type="checkbox">
+          Afficher le choix « Où acheter » à côté des articles
+        </label>
+        <div class="settings-note">Par défaut, aucun nom n'est choisi sur les articles. L'option « Où acheter » est activée par défaut. Ouvre une catégorie : tu verras un menu « Où acheter » sur chaque article avec Métro, IGA, Maxi, Costco, Super C, Walmart et Boucherie.</div>
       </div>
 
       <div class="settings-section">
@@ -1044,7 +1049,8 @@ function loadPeopleConfig() {
   return {
     parents: ["Pierre", "Nathalie"],
     children: [],
-    showArticleNames: false
+    showArticleNames: false,
+    showStoreSelect: true
   };
 }
 
@@ -1052,7 +1058,8 @@ function normalizePeopleConfig(config) {
   return {
     parents: Array.isArray(config.parents) ? config.parents.filter(Boolean) : [],
     children: Array.isArray(config.children) ? config.children.filter(Boolean) : [],
-    showArticleNames: config.showArticleNames === true
+    showArticleNames: config.showArticleNames === true,
+    showStoreSelect: config.showStoreSelect !== false
   };
 }
 
@@ -1074,6 +1081,10 @@ function assignStore(catIndex, itemIndex, value) {
 
 function shouldShowArticleNames() {
   return loadPeopleConfig().showArticleNames === true;
+}
+
+function shouldShowStoreSelect() {
+  return loadPeopleConfig().showStoreSelect !== false;
 }
 
 function getPeopleFromConfig(config) {
@@ -1113,6 +1124,7 @@ function openSettings() {
   document.getElementById("parentCount").value = config.parents.length;
   document.getElementById("childCount").value = config.children.length;
   document.getElementById("showArticleNames").checked = config.showArticleNames === true;
+  document.getElementById("showStoreSelect").checked = config.showStoreSelect !== false;
   overlay.dataset.parents = JSON.stringify(config.parents);
   overlay.dataset.children = JSON.stringify(config.children);
 
@@ -1191,7 +1203,8 @@ function collectSettingsConfig() {
   return {
     parents,
     children,
-    showArticleNames: document.getElementById("showArticleNames").checked === true
+    showArticleNames: document.getElementById("showArticleNames").checked === true,
+    showStoreSelect: document.getElementById("showStoreSelect").checked === true
   };
 }
 
@@ -1691,11 +1704,14 @@ function render() {
         personSelect.addEventListener("change", () => assignPerson(catIndex, itemIndex, personSelect.value));
       }
 
-      const storeSelect = document.createElement("select");
-      storeSelect.className = "store-select";
-      storeSelect.innerHTML = getStoreOptions().map(store => `<option value="${escapeHtml(store)}" ${item.store === store ? "selected" : ""}>${store ? escapeHtml(store) : "Rien"}</option>`).join("");
-      storeSelect.addEventListener("click", (e) => e.stopPropagation());
-      storeSelect.addEventListener("change", () => assignStore(catIndex, itemIndex, storeSelect.value));
+      let storeSelect = null;
+      if (shouldShowStoreSelect()) {
+        storeSelect = document.createElement("select");
+        storeSelect.className = "store-select";
+        storeSelect.innerHTML = getStoreOptions().map(store => `<option value="${escapeHtml(store)}" ${item.store === store ? "selected" : ""}>${store ? escapeHtml(store) : "Où acheter"}</option>`).join("");
+        storeSelect.addEventListener("click", (e) => e.stopPropagation());
+        storeSelect.addEventListener("change", () => assignStore(catIndex, itemIndex, storeSelect.value));
+      }
 
       const actions = document.createElement("div");
       actions.className = "item-actions";
@@ -1732,7 +1748,7 @@ function render() {
       label.appendChild(cb);
       label.appendChild(span);
       if (personSelect) label.appendChild(personSelect);
-      label.appendChild(storeSelect);
+      if (storeSelect) label.appendChild(storeSelect);
       label.appendChild(actions);
       itemsDiv.appendChild(label);
     });
