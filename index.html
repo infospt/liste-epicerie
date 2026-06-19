@@ -1070,6 +1070,7 @@ function getStoreOptions() {
 }
 
 function assignStore(catIndex, itemIndex, value) {
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
   data[catIndex].items[itemIndex].store = value;
   saveData();
   render();
@@ -1077,6 +1078,7 @@ function assignStore(catIndex, itemIndex, value) {
   if (panel && panel.style.display === "block") {
     showSelected();
   }
+  requestAnimationFrame(() => window.scrollTo(0, y));
 }
 
 function shouldShowArticleNames() {
@@ -1524,6 +1526,7 @@ function saveSettings() {
 }
 
 function assignPerson(catIndex, itemIndex, value) {
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
   data[catIndex].items[itemIndex].person = value;
   saveData();
   render();
@@ -1531,6 +1534,7 @@ function assignPerson(catIndex, itemIndex, value) {
   if (panel && panel.style.display === "block") {
     showSelected();
   }
+  requestAnimationFrame(() => window.scrollTo(0, y));
 }
 
 function loadCollapsedCategories() {
@@ -1608,6 +1612,14 @@ function renderAlphaBar() {
   });
 }
 
+function renderKeepPosition() {
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+  render();
+  requestAnimationFrame(() => {
+    window.scrollTo(0, y);
+  });
+}
+
 function render() {
   data.forEach(cat => {
     if (!Object.prototype.hasOwnProperty.call(collapsedCategories, cat.name)) {
@@ -1669,6 +1681,7 @@ function render() {
       cb.type = "checkbox";
       cb.checked = item.checked;
       cb.addEventListener("change", () => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
         item.checked = cb.checked === true;
         if (item.checked !== true) item.inBasket = false;
         saveData();
@@ -1677,6 +1690,7 @@ function render() {
         if (panel && panel.style.display === "block") {
           showSelected();
         }
+        requestAnimationFrame(() => window.scrollTo(0, y));
       });
 
       const span = document.createElement("span");
@@ -1907,10 +1921,12 @@ function showSelected() {
 }
 
 function toggleBasket(catIndex, itemIndex, value) {
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
   data[catIndex].items[itemIndex].inBasket = value === true;
   saveData();
   render();
   showSelected();
+  requestAnimationFrame(() => window.scrollTo(0, y));
 }
 
 function checkAllBasket() {
@@ -2033,11 +2049,12 @@ function restoreDeletedItems() {
 }
 
 function resetShoppingTrip() {
-  if (!confirm("Réinitialiser ma course ? Tous les articles seront décochés et le panier sera vidé.")) return;
+  if (!confirm("Réinitialiser ma course ? Tous les articles seront décochés, le panier sera vidé et l'épicerie sera remise à « Où acheter ».")) return;
 
   data.forEach(cat => cat.items.forEach(i => {
     i.checked = false;
     i.inBasket = false;
+    i.store = "";
   }));
 
   saveData();
