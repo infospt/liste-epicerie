@@ -162,12 +162,16 @@
       font-size:11px;
       background:white;
       border:1px solid var(--border);
-      border-radius:999px;
-      padding:3px 8px;
+      border-radius:12px;
+      padding:5px 8px;
       white-space:normal;
       text-align:right;
       line-height:1.25;
-      max-width:145px;
+      min-width:112px;
+      max-width:150px;
+    }
+    .cat-title span.count strong {
+      color:var(--blue);
     }
     .items { padding:8px 14px 14px; }
     .letter-heading {
@@ -487,8 +491,8 @@ function normalizeSavedData(saved) {
     name: cat.name,
     items: cat.items.map(item => ({
       name: item.name,
-      checked: !!item.checked,
-      inBasket: !!item.inBasket
+      checked: item.checked === true || item.checked === "true",
+      inBasket: item.inBasket === true || item.inBasket === "true"
     }))
   }));
 }
@@ -564,14 +568,14 @@ function render() {
     if (filtered.length === 0) return;
 
     const totalCount = cat.items.length;
-    const selectedCount = cat.items.filter(i => i.checked).length;
-    const basketCount = cat.items.filter(i => i.checked && i.inBasket).length;
+    const selectedCount = cat.items.reduce((total, item) => total + (item.checked ? 1 : 0), 0);
+    const basketCount = cat.items.reduce((total, item) => total + (item.checked && item.inBasket ? 1 : 0), 0);
     const section = document.createElement("section");
     section.className = "category" + (collapsedCategories[cat.name] ? " collapsed" : "");
 
     const title = document.createElement("div");
     title.className = "cat-title";
-    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count">${totalCount} article(s) • ${selectedCount} sélectionné(s) • ${basketCount} panier</span>`;
+    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count"><strong>${totalCount}</strong> article(s)<br><strong>${selectedCount}</strong> sélectionné(s)<br><strong>${basketCount}</strong> panier</span>`;
     title.addEventListener("click", () => toggleCategory(cat.name));
     section.appendChild(title);
 
@@ -601,6 +605,10 @@ function render() {
         if (!item.checked) item.inBasket = false;
         saveData();
         render();
+        const panel = document.getElementById("selectedPanel");
+        if (panel && panel.style.display === "block") {
+          showSelected();
+        }
       });
 
       const span = document.createElement("span");
