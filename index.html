@@ -159,12 +159,15 @@
     }
     .cat-title span.count {
       color:var(--dark);
-      font-size:12px;
+      font-size:11px;
       background:white;
       border:1px solid var(--border);
       border-radius:999px;
       padding:3px 8px;
-      white-space:nowrap;
+      white-space:normal;
+      text-align:right;
+      line-height:1.25;
+      max-width:145px;
     }
     .items { padding:8px 14px 14px; }
     .letter-heading {
@@ -560,6 +563,7 @@ function render() {
       .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
     if (filtered.length === 0) return;
 
+    const totalCount = cat.items.length;
     const selectedCount = cat.items.filter(i => i.checked).length;
     const basketCount = cat.items.filter(i => i.checked && i.inBasket).length;
     const section = document.createElement("section");
@@ -567,7 +571,7 @@ function render() {
 
     const title = document.createElement("div");
     title.className = "cat-title";
-    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count">${basketCount}/${selectedCount} panier</span>`;
+    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count">${totalCount} article(s) • ${selectedCount} sélectionné(s) • ${basketCount} panier</span>`;
     title.addEventListener("click", () => toggleCategory(cat.name));
     section.appendChild(title);
 
