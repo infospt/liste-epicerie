@@ -77,6 +77,305 @@
       color:white;
       border-color:var(--blue);
     }
+    .people-panel {
+      display:none;
+    }
+    .settings-overlay {
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:3000;
+      background:rgba(0,0,0,.35);
+      padding:16px;
+      overflow:auto;
+    }
+    .settings-box {
+      background:white;
+      max-width:560px;
+      margin:30px auto;
+      border-radius:18px;
+      border:2px solid var(--blue);
+      box-shadow:0 8px 28px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    .settings-box h2 {
+      margin:0 0 12px;
+      color:var(--dark);
+      text-align:center;
+      font-size:22px;
+    }
+    .settings-section {
+      background:#f7fbff;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      margin:10px 0;
+    }
+    .settings-section h3 {
+      margin:0 0 10px;
+      color:var(--blue);
+      font-size:16px;
+      text-transform:uppercase;
+    }
+    .settings-line {
+      display:grid;
+      grid-template-columns:1fr 90px;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+      color:var(--dark);
+      font-weight:700;
+    }
+    .settings-line input,
+    .settings-name-row input {
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      font-size:15px;
+    }
+    .settings-name-row {
+      display:grid;
+      grid-template-columns:90px 1fr;
+      gap:8px;
+      align-items:center;
+      margin:8px 0;
+      font-size:14px;
+      color:#444;
+    }
+    .settings-actions {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:12px;
+    }
+    .settings-preview {
+      font-size:14px;
+      color:#444;
+      margin-top:8px;
+      line-height:1.45;
+    }
+    .settings-check {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:15px;
+      color:var(--dark);
+      font-weight:700;
+      margin:8px 0;
+    }
+    .settings-check input {
+      width:20px;
+      height:20px;
+      accent-color:var(--blue);
+    }
+    .settings-select,
+    .settings-text {
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      font-size:15px;
+      margin:6px 0;
+      background:white;
+    }
+    .duplicate-people-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:8px 0;
+    }
+    .duplicate-people-list label {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:7px 10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:14px;
+    }
+    .settings-note {
+      font-size:13px;
+      color:#555;
+      line-height:1.35;
+      margin:6px 0;
+    }
+    .settings-collapse-header {
+      width:100%;
+      background:#eef5fb;
+      color:var(--dark);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:11px 12px;
+      font-size:15px;
+      font-weight:800;
+      text-align:left;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+      cursor:pointer;
+    }
+    .settings-collapse-header .arrow {
+      font-size:18px;
+      transition:transform .2s ease;
+    }
+    .settings-collapse-header.collapsed .arrow {
+      transform:rotate(-90deg);
+    }
+    .settings-collapse-content.collapsed {
+      display:none;
+    }
+    .assign-category {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:12px;
+      margin:10px 0;
+      overflow:hidden;
+    }
+    .assign-category-title {
+      background:#eef5fb;
+      color:var(--dark);
+      font-weight:800;
+      padding:9px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .assign-category-left {
+      display:flex;
+      align-items:center;
+      gap:7px;
+      min-width:0;
+    }
+    .assign-chevron {
+      display:inline-block;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:white;
+      border:1px solid var(--border);
+      color:var(--dark);
+      text-align:center;
+      line-height:18px;
+      font-size:14px;
+      flex:0 0 auto;
+    }
+    .assign-category.collapsed .assign-chevron {
+      transform:rotate(-90deg);
+    }
+    .assign-category.collapsed .assign-items {
+      display:none;
+    }
+    .assign-category-title button {
+      padding:7px 9px;
+      font-size:12px;
+      border-radius:9px;
+      background:#e8eef5;
+      color:var(--dark);
+      border:1px solid var(--border);
+    }
+    .assign-items {
+      padding:8px 10px 10px;
+      max-height:230px;
+      overflow:auto;
+    }
+    .assign-item {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 0;
+      border-bottom:1px solid #edf1f5;
+      font-size:14px;
+    }
+    .assign-item:last-child {
+      border-bottom:0;
+    }
+    .assign-item input {
+      width:19px;
+      height:19px;
+      accent-color:var(--blue);
+      flex:0 0 auto;
+    }
+    .assign-current {
+      margin-left:auto;
+      color:var(--blue);
+      font-weight:800;
+      font-size:12px;
+    }
+    .assign-actions {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin:8px 0;
+    }
+    .people-title {
+      color:var(--dark);
+      font-weight:800;
+      font-size:14px;
+      margin-bottom:7px;
+    }
+    .people-row {
+      display:flex;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .people-row input {
+      flex:1;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      font-size:15px;
+    }
+    .people-chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    .person-chip {
+      background:white;
+      color:var(--dark);
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:6px 9px;
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .person-chip button {
+      background:#b73a3a;
+      color:white;
+      border:0;
+      width:20px;
+      height:20px;
+      padding:0;
+      border-radius:50%;
+      font-size:12px;
+      line-height:20px;
+    }
+    .person-select {
+      margin-left:auto;
+      min-width:104px;
+      max-width:125px;
+      padding:7px 6px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:white;
+      color:var(--dark);
+      font-size:13px;
+    }
+    .assigned-name {
+      font-size:12px;
+      color:var(--blue);
+      font-weight:800;
+      margin-left:4px;
+    }
     .collapse-tools {
       max-width:900px;
       margin:8px auto 0;
@@ -211,6 +510,14 @@
       margin-left:auto;
       display:flex;
       gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .tiny.duplicate {
+      background:#e8eef5;
+      color:var(--dark);
+      border:1px solid var(--border);
     }
     .tiny {
       font-size:12px;
@@ -414,7 +721,7 @@
         max-width:876px;
         transform:translateX(-50%);
       }
-      .toolbar { grid-template-columns:2fr 1fr 1fr 1fr; }
+      .toolbar { grid-template-columns:2fr 1fr 1fr 1fr 1fr; }
       .toolbar input { grid-column:auto; }
       .category-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
       .category { margin:0; }
@@ -429,7 +736,7 @@
       }
     }
     @media print {
-      header, .bottom-bar, .add-row, .item-actions, .toolbar, .alpha-bar, .collapse-tools, .selected-actions { display:none !important; }
+      header, .bottom-bar, .add-row, .item-actions, .toolbar, .alpha-bar, .people-panel, .collapse-tools, .selected-actions { display:none !important; }
       body { background:white; padding-bottom:0; }
       .selected-panel { display:block !important; border:0; }
       .category-grid { display:none; }
@@ -444,8 +751,17 @@
       <button onclick="showSelected()">Voir cochés</button>
       <button class="secondary" onclick="showAll()">Voir tout</button>
       <button class="danger" onclick="clearChecks()">Décocher tout</button>
+      <button class="secondary" onclick="openSettings()">Paramètres</button>
     </div>
     <div id="alphaBar" class="alpha-bar"></div>
+    <div class="people-panel">
+      <div class="people-title">Prénoms pour les articles</div>
+      <div class="people-row">
+        <input id="personInput" type="text" placeholder="Ajouter un prénom ex. Pierre">
+        <button type="button" onclick="addPerson()">Ajouter</button>
+      </div>
+      <div id="peopleChips" class="people-chips"></div>
+    </div>
     <div class="collapse-tools">
       <button type="button" onclick="collapseAll()">Voir seulement les catégories</button>
       <button type="button" onclick="expandAll()">Ouvrir toutes les catégories</button>
@@ -456,6 +772,79 @@
     <section id="selectedPanel" class="selected-panel"></section>
     <section id="categories" class="category-grid"></section>
   </main>
+
+  
+  <div id="settingsOverlay" class="settings-overlay">
+    <div class="settings-box">
+      <h2>Paramètres</h2>
+
+      <div class="settings-section">
+        <h3>Parents</h3>
+        <div class="settings-line">
+          <label for="parentCount">Nombre de parents</label>
+          <input id="parentCount" type="number" min="0" max="10" value="2" onchange="renderSettingsNameFields(); renderDuplicatePeopleList();">
+        </div>
+        <div id="parentNames"></div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Enfants</h3>
+        <div class="settings-line">
+          <label for="childCount">Nombre d'enfants</label>
+          <input id="childCount" type="number" min="0" max="20" value="0" onchange="renderSettingsNameFields(); renderDuplicatePeopleList();">
+        </div>
+        <div id="childNames"></div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Options des prénoms</h3>
+        <label class="settings-check">
+          <input id="showArticleNames" type="checkbox">
+          Afficher le choix du prénom à côté des articles
+        </label>
+        <div class="settings-note">Par défaut, aucun nom n'est choisi sur les articles.</div>
+      </div>
+
+      <div class="settings-section">
+        <button type="button" id="assignCollapseHeader" class="settings-collapse-header collapsed" onclick="toggleAssignSettings()">
+          <span>Insérer un prénom aux articles existants</span>
+          <span class="arrow">⌄</span>
+        </button>
+        <div id="assignCollapseContent" class="settings-collapse-content collapsed">
+          <div class="settings-note">Choisis un prénom, puis coche un ou plusieurs articles par catégorie. Tu peux aussi tout cocher.</div>
+          <select id="assignPersonSelect" class="settings-select"></select>
+          <div class="assign-actions">
+            <button type="button" onclick="openAllAssignCategories()">Ouvrir catégories</button>
+            <button type="button" class="secondary" onclick="closeAllAssignCategories()">Fermer catégories</button>
+            <button type="button" onclick="selectAllAssignItems()">Tout cocher</button>
+            <button type="button" class="secondary" onclick="clearAllAssignItems()">Tout décocher</button>
+            <button type="button" onclick="applyPersonToSelectedItems()">Insérer le prénom</button>
+            <button type="button" class="secondary" onclick="removePersonFromSelectedItems()">Enlever le prénom</button>
+          </div>
+          <div id="assignArticleList"></div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Copier un article par prénom</h3>
+        <div class="settings-note">Exemple : écris <strong>Médicaments</strong>, choisis Pierre et Nathalie, puis l'application crée <strong>Médicaments Pierre</strong> et <strong>Médicaments Nathalie</strong>.</div>
+        <select id="duplicateCategory" class="settings-select"></select>
+        <input id="duplicateBaseItem" class="settings-text" type="text" placeholder="Nom de base ex. Médicaments">
+        <div id="duplicatePeopleList" class="duplicate-people-list"></div>
+        <button type="button" onclick="duplicateItemForPeople()">Créer les articles pour les prénoms choisis</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Personnes disponibles</h3>
+        <div id="settingsPreview" class="settings-preview"></div>
+      </div>
+
+      <div class="settings-actions">
+        <button type="button" onclick="saveSettings()">Enregistrer</button>
+        <button type="button" class="secondary" onclick="closeSettings()">Fermer</button>
+      </div>
+    </div>
+  </div>
 
   <div id="manualShareBox" class="manual-share-box">
     <h3>Messenger</h3>
@@ -476,37 +865,81 @@
   </div>
 
 <script>
-const DEFAULT_DATA = [{"name": "Fruits", "items": ["Ananas", "Bananes", "Citron jaune", "Citron vert", "Fraises", "Framboises", "Kiwi jaune", "Kiwi vert", "Cantaloup", "Melon d'eau", "Melon de miel", "Mûres", "Oranges", "Pommes", "Raisins rouges", "Raisins verts"]}, {"name": "Produits laitiers", "items": ["Beurre", "Crème 35 %", "Crème à café", "Crème cuisson", "Crème fouettée", "Crème sure", "Fromage à la crème", "Fromage cottage", "Fromage râpé mozzarella", "Fromage râpé suisse", "Fromage tranche orange", "Fromage tranche suisse", "Lait", "Œufs", "Parmesan", "Yogourt"]}, {"name": "Condiments", "items": ["Câpres", "Huile d'olive", "Ketchup", "Mayonnaise", "Miel", "Moutarde Dijon", "Moutarde jaune", "Moutarde miel", "Petits cornichons", "Petits oignons", "Relish", "Sauce Hoisin", "Sauce soya", "Sauce tacos", "Sauce Worcestershire", "Vinaigre", "Vinaigrette salade"]}, {"name": "Eau, Jus, Boissons gazeuses", "items": ["1642", "Ananas", "Canneberge blanc", "Canneberge rouge", "Clamato", "Eau", "Eau déminéralisée", "Eau pétillante", "Orange", "Pomme", "Tomate", "V8"]}, {"name": "Légumes & oignons", "items": ["Ail", "Asperges", "Brocoli", "Carottes", "Champignons", "Chou-fleur", "Choux Bruxelles", "Concombres", "Échalotes françaises", "Gingembre", "Laitue", "Navet", "Oignon blanc", "Oignon rouge", "Oignon vert", "Poivron jaune", "Poivron orange", "Poivron rouge", "Poivron vert", "Pommes de terre", "Radis", "Salade", "Tomates"]}, {"name": "Boulangerie & Pâtisserie", "items": ["Bagels", "Baguette", "Biscuits soda", "Craquelins", "Farine", "Fécule de maïs", "Pain hamburger", "Pain hot dog", "Pain Nath", "Pain Pierre", "Pain sous-marin", "Petits Bateaux", "Pita", "Sucre blanc", "Sucre brun", "Toast Melba", "Tortillas"]}, {"name": "Conserves", "items": ["Baby clams", "Cœurs d'artichauts", "Cœurs de palmiers", "Crème de tomate", "Légumineuses", "Maïs en crème", "Maïs en grain", "Pâte de tomate", "Petits pois", "Sardine", "Saumon", "Sauce tomate", "Thon", "Tomates broyées", "Tomates en dés", "Tomates entières"]}, {"name": "Épices", "items": ["5 épices", "Ail en poudre", "Anis étoilé", "Basilic", "Cannelle", "Cardamome", "Clou de girofle", "Coriandre", "Cumin", "Curcuma", "Curry", "Graines de moutarde", "Herbes de provence", "Mélange italien", "Muscade", "Origan", "Paprika", "Piment de Cayenne", "Poivre grain", "Poivre moulu", "Safran", "Sel", "Thym"]}, {"name": "Surgelés", "items": ["Crème glacée", "Frites", "Fruits surgelés", "Légumes surgelés", "Pâte à pizza", "Pizza"]}, {"name": "Boissons alcoolisées", "items": ["Bière Nath", "Bière Pierre", "Champagne", "Gin", "Mousseux", "Vin blanc", "Vin rosé", "Vin rouge", "Vodka"]}, {"name": "Pâtes alimentaires", "items": ["Coude", "Farfalle", "Fettuccine", "Fusilli", "Lasagne", "Linguine", "Macaroni", "Orzo", "Penne", "Ravioli", "Rigatoni", "Spaghetti", "Spaghettini"]}, {"name": "Sauces", "items": ["Sauce à spaghetti", "Sauce Alfredo", "Sauce brune", "Sauce piquante", "Sauce rosée", "Sauce teriyaki"]}, {"name": "Produits céréaliers & féculents", "items": ["Céréales", "Gruau", "Orge", "Pois à soupe", "Riz basmati", "Riz blanc", "Riz jasmin"]}, {"name": "Viandes & Charcuterie", "items": ["Bacon", "Belogne", "Bœuf: bavette", "Bœuf: haché", "Bœuf: steak", "Creton", "Dinde", "Jambon", "Pâtés de campagne", "Pâtés de foie", "Pepperoni", "Porc: côtelettes", "Porc: haché", "Porc: rôti", "Poulet entier", "Poulet: cuisses", "Poulet: hauts-cuisse", "Poulet: pilons", "Poulet: poitrines", "Salami", "Saucisse hot dog", "Saucisse porc & bœuf", "Saucissons sec", "Simili poulet", "Terrines", "Tomahawk", "Veau haché"]}, {"name": "Poissons & Fruits de mer", "items": ["Crabe", "Crabe chair", "Crevettes", "Crevettes à l\'ail", "Homard", "Homard chair", "Saumon", "Saumon fumé", "Thon"]}];
+const DEFAULT_DATA = [{"name": "Fruits", "items": ["Ananas", "Bananes", "Citron jaune", "Citron vert", "Fraises", "Framboises", "Kiwi jaune", "Kiwi vert", "Cantaloup", "Melon d'eau", "Melon de miel", "Mûres", "Oranges", "Pommes", "Raisins rouges", "Raisins verts"]}, {"name": "Produits laitiers", "items": ["Beurre", "Crème 35 %", "Crème à café", "Crème cuisson", "Crème fouettée", "Crème sure", "Fromage à la crème", "Fromage cottage", "Fromage râpé mozzarella", "Fromage râpé suisse", "Fromage tranche orange", "Fromage tranche suisse", "Lait", "Œufs", "Parmesan", "Yogourt"]}, {"name": "Condiments", "items": ["Câpres", "Huile d'olive", "Ketchup", "Mayonnaise", "Miel", "Moutarde Dijon", "Moutarde jaune", "Moutarde miel", "Petits cornichons", "Petits oignons", "Relish", "Sauce Hoisin", "Sauce soya", "Sauce tacos", "Sauce Worcestershire", "Vinaigre", "Vinaigrette salade"]}, {"name": "Eau, Jus, Boissons gazeuses", "items": ["1642", "Ananas", "Canneberge blanc", "Canneberge rouge", "Clamato", "Eau", "Eau déminéralisée", "Eau pétillante", "Orange", "Pomme", "Tomate", "V8"]}, {"name": "Légumes & oignons", "items": ["Ail", "Asperges", "Brocoli", "Carottes", "Champignons", "Chou-fleur", "Choux Bruxelles", "Concombres", "Échalotes françaises", "Gingembre", "Laitue", "Navet", "Oignon blanc", "Oignon rouge", "Oignon vert", "Poivron jaune", "Poivron orange", "Poivron rouge", "Poivron vert", "Pommes de terre", "Radis", "Salade", "Tomates"]}, {"name": "Boulangerie & Pâtisserie", "items": ["Bagels", "Baguette", "Biscuits soda", "Craquelins", "Farine", "Fécule de maïs", "Pain hamburger", "Pain hot dog", "Pain Nath", "Pain Pierre", "Pain sous-marin", "Petits Bateaux", "Pita", "Sucre blanc", "Sucre brun", "Toast Melba", "Tortillas"]}, {"name": "Conserves", "items": ["Baby clams", "Cœurs d'artichauts", "Cœurs de palmiers", "Crème de tomate", "Légumineuses", "Maïs en crème", "Maïs en grain", "Pâte de tomate", "Petits pois", "Sardine", "Saumon", "Sauce tomate", "Thon", "Tomates broyées", "Tomates en dés", "Tomates entières"]}, {"name": "Épices", "items": ["5 épices", "Ail en poudre", "Anis étoilé", "Basilic", "Cannelle", "Cardamome", "Clou de girofle", "Coriandre", "Cumin", "Curcuma", "Curry", "Graines de moutarde", "Herbes de provence", "Mélange italien", "Muscade", "Origan", "Paprika", "Piment de Cayenne", "Poivre grain", "Poivre moulu", "Safran", "Sel", "Thym"]}, {"name": "Surgelés", "items": ["Crème glacée", "Frites", "Fruits surgelés", "Légumes surgelés", "Pâte à pizza", "Pizza"]}, {"name": "Boissons alcoolisées", "items": ["Bière Nath", "Bière Pierre", "Champagne", "Gin", "Mousseux", "Vin blanc", "Vin rosé", "Vin rouge", "Vodka"]}, {"name": "Pâtes alimentaires", "items": ["Coude", "Farfalle", "Fettuccine", "Fusilli", "Lasagne", "Linguine", "Macaroni", "Orzo", "Penne", "Ravioli", "Rigatoni", "Spaghetti", "Spaghettini"]}, {"name": "Sauces", "items": ["Sauce à spaghetti", "Sauce Alfredo", "Sauce brune", "Sauce piquante", "Sauce rosée", "Sauce teriyaki"]}, {"name": "Produits céréaliers & féculents", "items": ["Céréales", "Gruau", "Orge", "Pois à soupe", "Riz basmati", "Riz blanc", "Riz jasmin"]}, {"name": "Viandes & Charcuterie", "items": ["Bacon", "Belogne", "Bœuf: bavette", "Bœuf: haché", "Bœuf: steak", "Creton", "Dinde", "Jambon", "Pâtés de campagne", "Pâtés de foie", "Pepperoni", "Porc: côtelettes", "Porc: haché", "Porc: rôti", "Poulet entier", "Poulet: cuisses", "Poulet: hauts-cuisse", "Poulet: pilons", "Poulet: poitrines", "Salami", "Saucisse hot dog", "Saucisse porc & bœuf", "Saucissons sec", "Simili poulet", "Terrines", "Tomahawk", "Veau haché"]}, {"name": "Poissons & Fruits de mer", "items": ["Crabe", "Crabe chair", "Crevettes", "Crevettes à l\'ail", "Homard", "Homard chair", "Pétoncles", "Saumon", "Saumon fumé", "Thon"]}, {"name": "Pharmacie", "items": ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"]}];
 const STORAGE_KEY = "liste_epicerie_mobile_v3_panier";
 
 let data = loadData();
+let people = loadPeople();
 let selectedLetter = "TOUS";
+let assignCollapsedCategories = {};
 let collapsedCategories = loadCollapsedCategories();
+
+
+function forcePharmacieCategory(cats) {
+  if (!cats.some(cat => cat.name === "Pharmacie")) {
+    cats.push({
+      name: "Pharmacie",
+      items: ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"].map(name => ({ name, checked: false, inBasket: false, person: "" }))
+    });
+  }
+  return cats;
+}
+
+
+function filterDeletedItems(cats) {
+  const deleted = getDeletedOfficialItems();
+  return cats.map(cat => ({
+    name: cat.name,
+    items: cat.items.filter(item => {
+      const itemName = typeof item === "string" ? item : item.name;
+      return !(deleted[cat.name] && deleted[cat.name].some(name => name.toLowerCase() === itemName.toLowerCase()));
+    })
+  }));
+}
 
 function loadData() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return normalizeSavedData(JSON.parse(saved));
+    if (saved) return filterDeletedItems(forcePharmacieCategory(normalizeSavedData(JSON.parse(saved))));
   } catch(e) {}
-  return DEFAULT_DATA.map(cat => ({
+  return filterDeletedItems(forcePharmacieCategory(DEFAULT_DATA.map(cat => ({
     name: cat.name,
-    items: cat.items.map(name => ({ name, checked:false, inBasket:false }))
-  }));
+    items: cat.items.map(name => ({ name, checked:false, inBasket:false, person:"" }))
+  }))));
 }
 
 
 
+
+function ensureOfficialCategories(cats) {
+  const officialCategories = [
+    { name: "Pharmacie", items: ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"] }
+  ];
+
+  officialCategories.forEach(official => {
+    if (!cats.some(cat => cat.name === official.name)) {
+      cats.push({
+        name: official.name,
+        items: official.items.map(name => ({ name, checked: false, inBasket: false, person: "" }))
+      });
+    }
+  });
+
+  return cats;
+}
+
 function ensureOfficialItems(cats) {
   const additions = {
+    "Pharmacie": ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"],
     "Viandes & Charcuterie": ["Tartare de bœuf", "Tomahawk"],
-    "Poissons & Fruits de mer": ["Saumon fumé", "Crevettes à l\'ail", "Homard", "Homard chair", "Crabe", "Crabe chair"]
+    "Poissons & Fruits de mer": ["Saumon fumé", "Crevettes à l\'ail", "Homard", "Homard chair", "Crabe", "Crabe chair", "Pétoncles"]
   };
 
   cats.forEach(cat => {
     const itemsToAdd = additions[cat.name] || [];
     itemsToAdd.forEach(name => {
-      if (!cat.items.some(item => item.name.toLowerCase() === name.toLowerCase())) {
-        cat.items.push({ name: name, checked: false, inBasket: false });
+      if (!isItemDeleted(cat.name, name) && !cat.items.some(item => item.name.toLowerCase() === name.toLowerCase())) {
+        cat.items.push({ name: name, checked: false, inBasket: false, person: "" });
       }
     });
     cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
@@ -557,23 +990,440 @@ function normalizeSavedData(saved) {
     items: cat.items.map(item => ({
       name: item.name,
       checked: item.checked === true || item.checked === "true",
-      inBasket: item.inBasket === true || item.inBasket === "true"
+      inBasket: item.inBasket === true || item.inBasket === "true",
+      person: item.person || ""
     }))
   }));
-  return ensureOfficialItems(migrateOldMeatFishCategory(normalized));
+  return forcePharmacieCategory(ensureOfficialItems(ensureOfficialCategories(migrateOldMeatFishCategory(normalized))));
 }
 
 function saveData() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function loadCollapsedCategories() {
+function loadPeople() {
+  const config = loadPeopleConfig();
+  return getPeopleFromConfig(config);
+}
+
+function loadPeopleConfig() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY + "_collapsed");
-    if (saved) return JSON.parse(saved);
+    const saved = localStorage.getItem(STORAGE_KEY + "_people_config");
+    if (saved) return normalizePeopleConfig(JSON.parse(saved));
   } catch(e) {}
 
-  // Par défaut : afficher seulement les catégories fermées
+  // Compatibilité avec l'ancienne version qui avait seulement une liste de prénoms.
+  try {
+    const oldPeople = localStorage.getItem(STORAGE_KEY + "_people");
+    if (oldPeople) {
+      const names = JSON.parse(oldPeople);
+      return normalizePeopleConfig({
+        parents: names.slice(0, 2),
+        children: names.slice(2)
+      });
+    }
+  } catch(e) {}
+
+  return {
+    parents: ["Pierre", "Nathalie"],
+    children: [],
+    showArticleNames: false
+  };
+}
+
+function normalizePeopleConfig(config) {
+  return {
+    parents: Array.isArray(config.parents) ? config.parents.filter(Boolean) : [],
+    children: Array.isArray(config.children) ? config.children.filter(Boolean) : [],
+    showArticleNames: config.showArticleNames === true
+  };
+}
+
+
+function shouldShowArticleNames() {
+  return loadPeopleConfig().showArticleNames === true;
+}
+
+function getPeopleFromConfig(config) {
+  return [...config.parents, ...config.children].filter(Boolean);
+}
+
+function savePeopleConfig(config) {
+  localStorage.setItem(STORAGE_KEY + "_people_config", JSON.stringify(normalizePeopleConfig(config)));
+  people = getPeopleFromConfig(config);
+  savePeople();
+}
+
+
+function savePeople() {
+  localStorage.setItem(STORAGE_KEY + "_people", JSON.stringify(people));
+}
+
+function renderPeople() {
+  // Les prénoms sont maintenant configurés dans Paramètres.
+  const root = document.getElementById("peopleChips");
+  if (root) root.innerHTML = "";
+}
+
+function addPerson() {
+  openSettings();
+}
+
+function removePerson(index) {
+  openSettings();
+}
+
+
+function openSettings() {
+  const overlay = document.getElementById("settingsOverlay");
+  const config = loadPeopleConfig();
+
+  document.getElementById("parentCount").value = config.parents.length;
+  document.getElementById("childCount").value = config.children.length;
+  document.getElementById("showArticleNames").checked = config.showArticleNames === true;
+  overlay.dataset.parents = JSON.stringify(config.parents);
+  overlay.dataset.children = JSON.stringify(config.children);
+
+  renderSettingsNameFields();
+  renderDuplicateCategoryOptions();
+  renderDuplicatePeopleList();
+  assignCollapsedCategories = {};
+  renderAssignPersonSelect();
+  renderAssignArticleList();
+  toggleAssignSettings(false);
+  overlay.style.display = "block";
+}
+
+function closeSettings() {
+  document.getElementById("settingsOverlay").style.display = "none";
+}
+
+function renderSettingsNameFields() {
+  const overlay = document.getElementById("settingsOverlay");
+  const savedParents = JSON.parse(overlay.dataset.parents || "[]");
+  const savedChildren = JSON.parse(overlay.dataset.children || "[]");
+
+  const parentCount = Math.max(0, Math.min(10, parseInt(document.getElementById("parentCount").value || "0", 10)));
+  const childCount = Math.max(0, Math.min(20, parseInt(document.getElementById("childCount").value || "0", 10)));
+
+  const parentRoot = document.getElementById("parentNames");
+  const childRoot = document.getElementById("childNames");
+  parentRoot.innerHTML = "";
+  childRoot.innerHTML = "";
+
+  for (let i = 0; i < parentCount; i++) {
+    const row = document.createElement("div");
+    row.className = "settings-name-row";
+    row.innerHTML = `<div>Parent ${i + 1}</div><input id="parentName_${i}" type="text" value="${escapeHtml(savedParents[i] || "")}" placeholder="Prénom du parent">`;
+    parentRoot.appendChild(row);
+  }
+
+  for (let i = 0; i < childCount; i++) {
+    const row = document.createElement("div");
+    row.className = "settings-name-row";
+    row.innerHTML = `<div>Enfant ${i + 1}</div><input id="childName_${i}" type="text" value="${escapeHtml(savedChildren[i] || "")}" placeholder="Prénom de l'enfant">`;
+    childRoot.appendChild(row);
+  }
+
+  updateSettingsPreview();
+  parentRoot.querySelectorAll("input").forEach(input => input.addEventListener("input", () => {
+    updateSettingsPreview();
+    renderDuplicatePeopleList();
+    renderAssignPersonSelect();
+  }));
+  childRoot.querySelectorAll("input").forEach(input => input.addEventListener("input", () => {
+    updateSettingsPreview();
+    renderDuplicatePeopleList();
+    renderAssignPersonSelect();
+  }));
+}
+
+function collectSettingsConfig() {
+  const parentCount = Math.max(0, Math.min(10, parseInt(document.getElementById("parentCount").value || "0", 10)));
+  const childCount = Math.max(0, Math.min(20, parseInt(document.getElementById("childCount").value || "0", 10)));
+
+  const parents = [];
+  const children = [];
+
+  for (let i = 0; i < parentCount; i++) {
+    const value = (document.getElementById("parentName_" + i)?.value || "").trim();
+    if (value) parents.push(value);
+  }
+
+  for (let i = 0; i < childCount; i++) {
+    const value = (document.getElementById("childName_" + i)?.value || "").trim();
+    if (value) children.push(value);
+  }
+
+  return {
+    parents,
+    children,
+    showArticleNames: document.getElementById("showArticleNames").checked === true
+  };
+}
+
+function updateSettingsPreview() {
+  const config = collectSettingsConfig();
+  const names = getPeopleFromConfig(config);
+  document.getElementById("settingsPreview").innerHTML = names.length
+    ? names.map(escapeHtml).join(", ")
+    : "Aucun prénom configuré.";
+}
+
+
+
+
+function toggleAssignSettings(forceOpen = null) {
+  const header = document.getElementById("assignCollapseHeader");
+  const content = document.getElementById("assignCollapseContent");
+  if (!header || !content) return;
+
+  const shouldOpen = forceOpen === null ? content.classList.contains("collapsed") : forceOpen;
+
+  if (shouldOpen) {
+    header.classList.remove("collapsed");
+    content.classList.remove("collapsed");
+  } else {
+    header.classList.add("collapsed");
+    content.classList.add("collapsed");
+  }
+}
+
+function renderAssignPersonSelect() {
+  const select = document.getElementById("assignPersonSelect");
+  if (!select) return;
+
+  const config = collectSettingsConfig();
+  const names = getPeopleFromConfig(config);
+  select.innerHTML = `<option value="">Choisir un prénom</option>` + names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+}
+
+function renderAssignArticleList() {
+  const root = document.getElementById("assignArticleList");
+  if (!root) return;
+
+  root.innerHTML = "";
+  data.forEach((cat, catIndex) => {
+    if (assignCollapsedCategories[cat.name] === undefined) {
+      assignCollapsedCategories[cat.name] = true; // fermé par défaut
+    }
+
+    const section = document.createElement("div");
+    section.className = "assign-category" + (assignCollapsedCategories[cat.name] ? " collapsed" : "");
+
+    const title = document.createElement("div");
+    title.className = "assign-category-title";
+    title.innerHTML = `
+      <div class="assign-category-left">
+        <span class="assign-chevron">⌄</span>
+        <span>${escapeHtml(cat.name)}</span>
+      </div>
+      <button type="button" onclick="event.stopPropagation(); selectAssignCategory(${catIndex})">Tout cette catégorie</button>
+    `;
+    title.addEventListener("click", () => toggleAssignCategory(cat.name));
+    section.appendChild(title);
+
+    const items = document.createElement("div");
+    items.className = "assign-items";
+
+    cat.items
+      .map((item, itemIndex) => ({ item, itemIndex }))
+      .sort((a,b) => a.item.name.localeCompare(b.item.name, "fr", { sensitivity:"base" }))
+      .forEach(({ item, itemIndex }) => {
+        const label = document.createElement("label");
+        label.className = "assign-item";
+        label.innerHTML = `
+          <input type="checkbox" class="assign-item-check" data-cat="${catIndex}" data-item="${itemIndex}">
+          <span>${escapeHtml(item.name)}</span>
+          ${item.person ? `<span class="assign-current">${escapeHtml(item.person)}</span>` : ""}
+        `;
+        items.appendChild(label);
+      });
+
+    section.appendChild(items);
+    root.appendChild(section);
+  });
+}
+
+function toggleAssignCategory(catName) {
+  assignCollapsedCategories[catName] = !assignCollapsedCategories[catName];
+  renderAssignArticleList();
+}
+
+
+function openAllAssignCategories() {
+  data.forEach(cat => assignCollapsedCategories[cat.name] = false);
+  renderAssignArticleList();
+}
+
+function closeAllAssignCategories() {
+  data.forEach(cat => assignCollapsedCategories[cat.name] = true);
+  renderAssignArticleList();
+}
+
+function selectAssignCategory(catIndex) {
+  document.querySelectorAll(`.assign-item-check[data-cat="${catIndex}"]`).forEach(input => input.checked = true);
+}
+
+function selectAllAssignItems() {
+  document.querySelectorAll(".assign-item-check").forEach(input => input.checked = true);
+}
+
+function clearAllAssignItems() {
+  document.querySelectorAll(".assign-item-check").forEach(input => input.checked = false);
+}
+
+function getSelectedAssignTargets() {
+  return Array.from(document.querySelectorAll(".assign-item-check:checked")).map(input => ({
+    catIndex: parseInt(input.dataset.cat, 10),
+    itemIndex: parseInt(input.dataset.item, 10)
+  }));
+}
+
+function applyPersonToSelectedItems() {
+  const person = document.getElementById("assignPersonSelect").value;
+  const targets = getSelectedAssignTargets();
+
+  if (!person) {
+    alert("Choisis un prénom.");
+    return;
+  }
+  if (!targets.length) {
+    alert("Coche au moins un article.");
+    return;
+  }
+
+  targets.forEach(({ catIndex, itemIndex }) => {
+    data[catIndex].items[itemIndex].person = person;
+  });
+
+  saveData();
+  render();
+  renderAssignArticleList();
+  alert(`Prénom « ${person} » ajouté à ${targets.length} article(s).`);
+}
+
+function removePersonFromSelectedItems() {
+  const targets = getSelectedAssignTargets();
+
+  if (!targets.length) {
+    alert("Coche au moins un article.");
+    return;
+  }
+
+  targets.forEach(({ catIndex, itemIndex }) => {
+    data[catIndex].items[itemIndex].person = "";
+  });
+
+  saveData();
+  render();
+  renderAssignArticleList();
+  alert(`Prénom retiré de ${targets.length} article(s).`);
+}
+
+function renderDuplicateCategoryOptions() {
+  const select = document.getElementById("duplicateCategory");
+  if (!select) return;
+  select.innerHTML = "";
+  data.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.name;
+    option.textContent = cat.name;
+    if (cat.name === "Pharmacie") option.selected = true;
+    select.appendChild(option);
+  });
+}
+
+function renderDuplicatePeopleList() {
+  const root = document.getElementById("duplicatePeopleList");
+  if (!root) return;
+  const config = collectSettingsConfig();
+  const names = getPeopleFromConfig(config);
+  root.innerHTML = "";
+
+  if (!names.length) {
+    root.innerHTML = "<div class='settings-note'>Aucun prénom configuré.</div>";
+    return;
+  }
+
+  names.forEach((name, index) => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="checkbox" class="duplicate-person" value="${escapeHtml(name)}" checked> ${escapeHtml(name)}`;
+    root.appendChild(label);
+  });
+}
+
+function duplicateItemForPeople() {
+  const categoryName = document.getElementById("duplicateCategory").value;
+  const base = document.getElementById("duplicateBaseItem").value.trim();
+  const selectedNames = Array.from(document.querySelectorAll(".duplicate-person:checked")).map(input => input.value);
+
+  if (!categoryName) {
+    alert("Choisis une catégorie.");
+    return;
+  }
+  if (!base) {
+    alert("Inscris le nom de base de l'article. Exemple : Médicaments");
+    return;
+  }
+  if (!selectedNames.length) {
+    alert("Choisis au moins un prénom.");
+    return;
+  }
+
+  const cat = data.find(c => c.name === categoryName);
+  if (!cat) return;
+
+  let added = 0;
+  selectedNames.forEach(name => {
+    const itemName = `${base} ${name}`.trim();
+    if (!cat.items.some(item => item.name.toLowerCase() === itemName.toLowerCase())) {
+      cat.items.push({ name: itemName, checked: false, inBasket: false, person: "" });
+      added++;
+    }
+  });
+
+  cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+  saveData();
+  render();
+  alert(added ? `${added} article(s) ajouté(s).` : "Ces articles existent déjà.");
+}
+
+function saveSettings() {
+  const oldPeople = [...people];
+  const config = collectSettingsConfig();
+  savePeopleConfig(config);
+
+  data.forEach(cat => cat.items.forEach(item => {
+    if (item.person && !people.includes(item.person)) {
+      item.person = "";
+    }
+  }));
+
+  saveData();
+  renderPeople();
+  renderAssignPersonSelect();
+  renderAssignArticleList();
+  render();
+  const panel = document.getElementById("selectedPanel");
+  if (panel && panel.style.display === "block") {
+    showSelected();
+  }
+  closeSettings();
+}
+
+function assignPerson(catIndex, itemIndex, value) {
+  data[catIndex].items[itemIndex].person = value;
+  saveData();
+  render();
+  const panel = document.getElementById("selectedPanel");
+  if (panel && panel.style.display === "block") {
+    showSelected();
+  }
+}
+
+function loadCollapsedCategories() {
+  // À chaque ouverture de l'application : toutes les catégories sont fermées.
   const collapsed = {};
   DEFAULT_DATA.forEach(cat => collapsed[cat.name] = true);
   return collapsed;
@@ -581,6 +1431,32 @@ function loadCollapsedCategories() {
 
 function saveCollapsedCategories() {
   localStorage.setItem(STORAGE_KEY + "_collapsed", JSON.stringify(collapsedCategories));
+}
+
+function getDeletedOfficialItems() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY + "_deleted_items");
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return {};
+}
+
+function saveDeletedOfficialItems(deleted) {
+  localStorage.setItem(STORAGE_KEY + "_deleted_items", JSON.stringify(deleted));
+}
+
+function markItemDeleted(categoryName, itemName) {
+  const deleted = getDeletedOfficialItems();
+  if (!deleted[categoryName]) deleted[categoryName] = [];
+  if (!deleted[categoryName].some(name => name.toLowerCase() === itemName.toLowerCase())) {
+    deleted[categoryName].push(itemName);
+  }
+  saveDeletedOfficialItems(deleted);
+}
+
+function isItemDeleted(categoryName, itemName) {
+  const deleted = getDeletedOfficialItems();
+  return !!(deleted[categoryName] && deleted[categoryName].some(name => name.toLowerCase() === itemName.toLowerCase()));
 }
 
 function normalizeLetter(str) {
@@ -622,6 +1498,15 @@ function renderAlphaBar() {
 }
 
 function render() {
+  data.forEach(cat => {
+    if (!Object.prototype.hasOwnProperty.call(collapsedCategories, cat.name)) {
+      collapsedCategories[cat.name] = true;
+    }
+  });
+  if (!Object.prototype.hasOwnProperty.call(collapsedCategories, "Pharmacie")) {
+    collapsedCategories["Pharmacie"] = true;
+    saveCollapsedCategories();
+  }
   if (collapsedCategories["Viandes, poissons & charcuteries"]) {
     collapsedCategories["Viandes & Charcuterie"] = true;
     collapsedCategories["Poissons & Fruits de mer"] = true;
@@ -685,9 +1570,34 @@ function render() {
 
       const span = document.createElement("span");
       span.textContent = item.name;
+      const showNames = shouldShowArticleNames();
+      if (showNames && item.person) {
+        const assigned = document.createElement("span");
+        assigned.className = "assigned-name";
+        assigned.textContent = "• " + item.person;
+        span.appendChild(assigned);
+      }
+
+      let personSelect = null;
+      if (showNames) {
+        personSelect = document.createElement("select");
+        personSelect.className = "person-select";
+        personSelect.innerHTML = `<option value="">Aucun nom</option>` + people.map(p => `<option value="${escapeHtml(p)}" ${item.person === p ? "selected" : ""}>${escapeHtml(p)}</option>`).join("");
+        personSelect.addEventListener("click", (e) => e.stopPropagation());
+        personSelect.addEventListener("change", () => assignPerson(catIndex, itemIndex, personSelect.value));
+      }
 
       const actions = document.createElement("div");
       actions.className = "item-actions";
+
+      const duplicate = document.createElement("button");
+      duplicate.className = "tiny duplicate";
+      duplicate.type = "button";
+      duplicate.textContent = "Dupliquer";
+      duplicate.addEventListener("click", (e) => {
+        e.preventDefault();
+        duplicateItem(catIndex, itemIndex);
+      });
 
       const del = document.createElement("button");
       del.className = "tiny danger";
@@ -696,15 +1606,22 @@ function render() {
       del.addEventListener("click", (e) => {
         e.preventDefault();
         if (confirm("Supprimer « " + item.name + " » ?")) {
+          markItemDeleted(cat.name, item.name);
           cat.items.splice(itemIndex, 1);
           saveData();
           render();
+          const panel = document.getElementById("selectedPanel");
+          if (panel && panel.style.display === "block") {
+            showSelected();
+          }
         }
       });
 
+      actions.appendChild(duplicate);
       actions.appendChild(del);
       label.appendChild(cb);
       label.appendChild(span);
+      if (personSelect) label.appendChild(personSelect);
       label.appendChild(actions);
       itemsDiv.appendChild(label);
     });
@@ -747,6 +1664,44 @@ function expandAll() {
   render();
 }
 
+
+function duplicateItem(catIndex, itemIndex) {
+  const cat = data[catIndex];
+  const original = cat.items[itemIndex];
+  if (!cat || !original) return;
+
+  const baseName = original.name;
+  let newName = prompt("Nom du nouvel article :", baseName + " copie");
+  if (newName === null) return;
+
+  newName = newName.trim();
+  if (!newName) {
+    alert("Le nom ne peut pas être vide.");
+    return;
+  }
+
+  if (cat.items.some(item => item.name.toLowerCase() === newName.toLowerCase())) {
+    alert("Cet article existe déjà dans cette catégorie.");
+    return;
+  }
+
+  cat.items.push({
+    name: newName,
+    checked: false,
+    inBasket: false,
+    person: original.person || ""
+  });
+
+  cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+  saveData();
+  render();
+
+  const panel = document.getElementById("selectedPanel");
+  if (panel && panel.style.display === "block") {
+    showSelected();
+  }
+}
+
 function addItem(catIndex, value) {
   const name = value.trim();
   if (!name) return;
@@ -755,7 +1710,7 @@ function addItem(catIndex, value) {
     alert("Cet article existe déjà dans cette catégorie.");
     return;
   }
-  cat.items.push({ name, checked:false, inBasket:false });
+  cat.items.push({ name, checked:false, inBasket:false, person:"" });
   cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
   saveData();
   selectedLetter = normalizeLetter(name) || "TOUS";
@@ -805,7 +1760,7 @@ function showSelected() {
         const rowClass = item.inBasket ? "in-basket" : "";
         const checked = item.inBasket ? "checked" : "";
         html += `<tr class="${rowClass}">
-          <td class="article-name">${escapeHtml(item.name)}</td>
+          <td class="article-name">${escapeHtml(item.name)}${shouldShowArticleNames() && item.person ? " <span class='assigned-name'>• " + escapeHtml(item.person) + "</span>" : ""}</td>
           <td class="basket-col">
             <input type="checkbox" ${checked} onchange="toggleBasket(${catIndex}, ${itemIndex}, this.checked)">
           </td>
@@ -873,7 +1828,7 @@ function buildSelectedText() {
       .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
     if (selected.length) {
       lines.push(cat.name);
-      selected.forEach(i => lines.push((i.inBasket ? "✓ " : "☐ ") + i.name));
+      selected.forEach(i => lines.push((i.inBasket ? "✓ " : "☐ ") + i.name + (shouldShowArticleNames() && i.person ? " (" + i.person + ")" : "")));
       lines.push("");
     }
   });
@@ -939,6 +1894,16 @@ function refreshCountersOnly() {
   }
 }
 
+function restoreDeletedItems() {
+  if (!confirm("Restaurer les articles supprimés officiellement ?")) return;
+  localStorage.removeItem(STORAGE_KEY + "_deleted_items");
+  localStorage.removeItem(STORAGE_KEY);
+  data = loadData();
+  saveData();
+  render();
+  alert("Les articles supprimés ont été restaurés.");
+}
+
 function resetShoppingTrip() {
   if (!confirm("Réinitialiser ma course ? Tous les articles seront décochés et le panier sera vidé.")) return;
 
@@ -958,6 +1923,19 @@ function escapeHtml(str) {
 }
 
 document.getElementById("search").addEventListener("input", render);
+const settingsOverlayEl = document.getElementById("settingsOverlay");
+if (settingsOverlayEl) {
+  settingsOverlayEl.addEventListener("click", (e) => {
+    if (e.target === settingsOverlayEl) closeSettings();
+  });
+}
+const personInputEl = document.getElementById("personInput");
+if (personInputEl) {
+  personInputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addPerson();
+  });
+}
+renderPeople();
 render();
 </script>
 </body>
