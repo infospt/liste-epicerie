@@ -370,6 +370,22 @@
       color:var(--dark);
       font-size:13px;
     }
+    .store-select {
+      min-width:96px;
+      max-width:115px;
+      padding:7px 6px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:white;
+      color:var(--dark);
+      font-size:13px;
+    }
+    .store-name {
+      font-size:12px;
+      color:#7a5200;
+      font-weight:800;
+      margin-left:4px;
+    }
     .assigned-name {
       font-size:12px;
       color:var(--blue);
@@ -879,7 +895,7 @@ function forcePharmacieCategory(cats) {
   if (!cats.some(cat => cat.name === "Pharmacie")) {
     cats.push({
       name: "Pharmacie",
-      items: ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"].map(name => ({ name, checked: false, inBasket: false, person: "" }))
+      items: ["Advil", "Advil enfants", "Aspirines", "Baume à lèvres", "Coussins démaquillant", "Crème barbe", "Crème pour le corps", "Crème solaire", "Crème visage", "Décongestionnant", "Hydrasense", "Hydrasense enfants", "Mascara", "Médicaments Nathalie", "Médicaments Pierre", "Pâte à dents", "Q-tips", "Rasoirs", "Shampoing", "Tylénol enfants", "Tylénols"].map(name => ({ name, checked: false, inBasket: false, person: "", store: "" }))
     });
   }
   return cats;
@@ -904,7 +920,7 @@ function loadData() {
   } catch(e) {}
   return filterDeletedItems(forcePharmacieCategory(DEFAULT_DATA.map(cat => ({
     name: cat.name,
-    items: cat.items.map(name => ({ name, checked:false, inBasket:false, person:"" }))
+    items: cat.items.map(name => ({ name, checked:false, inBasket:false, person:"", store:"" }))
   }))));
 }
 
@@ -920,7 +936,7 @@ function ensureOfficialCategories(cats) {
     if (!cats.some(cat => cat.name === official.name)) {
       cats.push({
         name: official.name,
-        items: official.items.map(name => ({ name, checked: false, inBasket: false, person: "" }))
+        items: official.items.map(name => ({ name, checked: false, inBasket: false, person: "", store: "" }))
       });
     }
   });
@@ -991,7 +1007,8 @@ function normalizeSavedData(saved) {
       name: item.name,
       checked: item.checked === true || item.checked === "true",
       inBasket: item.inBasket === true || item.inBasket === "true",
-      person: item.person || ""
+      person: item.person || "",
+      store: item.store || ""
     }))
   }));
   return forcePharmacieCategory(ensureOfficialItems(ensureOfficialCategories(migrateOldMeatFishCategory(normalized))));
@@ -1039,6 +1056,21 @@ function normalizePeopleConfig(config) {
   };
 }
 
+
+
+function getStoreOptions() {
+  return ["", "Métro", "IGA", "Maxi", "Costco", "Super C", "Walmart", "Boucherie"];
+}
+
+function assignStore(catIndex, itemIndex, value) {
+  data[catIndex].items[itemIndex].store = value;
+  saveData();
+  render();
+  const panel = document.getElementById("selectedPanel");
+  if (panel && panel.style.display === "block") {
+    showSelected();
+  }
+}
 
 function shouldShowArticleNames() {
   return loadPeopleConfig().showArticleNames === true;
@@ -1236,7 +1268,7 @@ function renderAssignArticleList() {
         label.innerHTML = `
           <input type="checkbox" class="assign-item-check" data-cat="${catIndex}" data-item="${itemIndex}">
           <span>${escapeHtml(item.name)}</span>
-          ${item.person ? `<span class="assign-current">${escapeHtml(item.person)}</span>` : ""}
+          ${item.person ? `<span class="assign-current">${escapeHtml(item.person)}</span>` : ""}${item.store ? `<span class="assign-current">${escapeHtml(item.store)}</span>` : ""}
         `;
         items.appendChild(label);
       });
@@ -1366,7 +1398,8 @@ function addItemFromSettings() {
     name: name,
     checked: false,
     inBasket: false,
-    person: ""
+    person: "",
+    store: ""
   });
 
   cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
@@ -1443,7 +1476,7 @@ function duplicateItemForPeople() {
   selectedNames.forEach(name => {
     const itemName = `${base} ${name}`.trim();
     if (!cat.items.some(item => item.name.toLowerCase() === itemName.toLowerCase())) {
-      cat.items.push({ name: itemName, checked: false, inBasket: false, person: "" });
+      cat.items.push({ name: itemName, checked: false, inBasket: false, person: "", store: "" });
       added++;
     }
   });
@@ -1642,6 +1675,12 @@ function render() {
         assigned.textContent = "• " + item.person;
         span.appendChild(assigned);
       }
+      if (item.store) {
+        const store = document.createElement("span");
+        store.className = "store-name";
+        store.textContent = "• " + item.store;
+        span.appendChild(store);
+      }
 
       let personSelect = null;
       if (showNames) {
@@ -1651,6 +1690,12 @@ function render() {
         personSelect.addEventListener("click", (e) => e.stopPropagation());
         personSelect.addEventListener("change", () => assignPerson(catIndex, itemIndex, personSelect.value));
       }
+
+      const storeSelect = document.createElement("select");
+      storeSelect.className = "store-select";
+      storeSelect.innerHTML = getStoreOptions().map(store => `<option value="${escapeHtml(store)}" ${item.store === store ? "selected" : ""}>${store ? escapeHtml(store) : "Rien"}</option>`).join("");
+      storeSelect.addEventListener("click", (e) => e.stopPropagation());
+      storeSelect.addEventListener("change", () => assignStore(catIndex, itemIndex, storeSelect.value));
 
       const actions = document.createElement("div");
       actions.className = "item-actions";
@@ -1687,6 +1732,7 @@ function render() {
       label.appendChild(cb);
       label.appendChild(span);
       if (personSelect) label.appendChild(personSelect);
+      label.appendChild(storeSelect);
       label.appendChild(actions);
       itemsDiv.appendChild(label);
     });
@@ -1754,7 +1800,8 @@ function duplicateItem(catIndex, itemIndex) {
     name: newName,
     checked: false,
     inBasket: false,
-    person: original.person || ""
+    person: original.person || "",
+    store: original.store || ""
   });
 
   cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
@@ -1775,7 +1822,7 @@ function addItem(catIndex, value) {
     alert("Cet article existe déjà dans cette catégorie.");
     return;
   }
-  cat.items.push({ name, checked:false, inBasket:false, person:"" });
+  cat.items.push({ name, checked:false, inBasket:false, person:"", store:"" });
   cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
   saveData();
   selectedLetter = normalizeLetter(name) || "TOUS";
@@ -1825,7 +1872,7 @@ function showSelected() {
         const rowClass = item.inBasket ? "in-basket" : "";
         const checked = item.inBasket ? "checked" : "";
         html += `<tr class="${rowClass}">
-          <td class="article-name">${escapeHtml(item.name)}${shouldShowArticleNames() && item.person ? " <span class='assigned-name'>• " + escapeHtml(item.person) + "</span>" : ""}</td>
+          <td class="article-name">${escapeHtml(item.name)}${shouldShowArticleNames() && item.person ? " <span class='assigned-name'>• " + escapeHtml(item.person) + "</span>" : ""}${item.store ? " <span class='store-name'>• " + escapeHtml(item.store) + "</span>" : ""}</td>
           <td class="basket-col">
             <input type="checkbox" ${checked} onchange="toggleBasket(${catIndex}, ${itemIndex}, this.checked)">
           </td>
@@ -1893,7 +1940,7 @@ function buildSelectedText() {
       .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
     if (selected.length) {
       lines.push(cat.name);
-      selected.forEach(i => lines.push((i.inBasket ? "✓ " : "☐ ") + i.name + (shouldShowArticleNames() && i.person ? " (" + i.person + ")" : "")));
+      selected.forEach(i => lines.push((i.inBasket ? "✓ " : "☐ ") + i.name + (shouldShowArticleNames() && i.person ? " (" + i.person + ")" : "") + (i.store ? " - " + i.store : "")));
       lines.push("");
     }
   });
