@@ -162,16 +162,24 @@
       font-size:11px;
       background:white;
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:5px 8px;
+      border-radius:18px;
+      padding:6px 10px;
       white-space:normal;
-      text-align:right;
+      text-align:center;
       line-height:1.25;
-      min-width:112px;
+      min-width:128px;
       max-width:150px;
+      display:flex;
+      flex-direction:column;
+      gap:1px;
+      flex:0 0 auto;
     }
     .cat-title span.count strong {
       color:var(--blue);
+      font-size:12px;
+    }
+    .cat-title span.count span {
+      display:block;
     }
     .items { padding:8px 14px 14px; }
     .letter-heading {
@@ -568,14 +576,14 @@ function render() {
     if (filtered.length === 0) return;
 
     const totalCount = cat.items.length;
-    const selectedCount = cat.items.reduce((total, item) => total + (item.checked ? 1 : 0), 0);
-    const basketCount = cat.items.reduce((total, item) => total + (item.checked && item.inBasket ? 1 : 0), 0);
+    const selectedCount = cat.items.reduce((total, item) => total + (item.checked === true ? 1 : 0), 0);
+    const basketCount = cat.items.reduce((total, item) => total + (item.checked === true && item.inBasket === true ? 1 : 0), 0);
     const section = document.createElement("section");
     section.className = "category" + (collapsedCategories[cat.name] ? " collapsed" : "");
 
     const title = document.createElement("div");
     title.className = "cat-title";
-    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count"><strong>${totalCount}</strong> article(s)<br><strong>${selectedCount}</strong> sélectionné(s)<br><strong>${basketCount}</strong> panier</span>`;
+    title.innerHTML = `<div class="cat-left"><span class="chevron">⌄</span><div>${escapeHtml(cat.name)}</div></div><span class="count"><span><strong>${totalCount}</strong> articles</span><span><strong>${selectedCount}</strong> à acheter</span><span><strong>${basketCount}</strong> dans panier</span></span>`;
     title.addEventListener("click", () => toggleCategory(cat.name));
     section.appendChild(title);
 
@@ -601,8 +609,8 @@ function render() {
       cb.type = "checkbox";
       cb.checked = item.checked;
       cb.addEventListener("change", () => {
-        item.checked = cb.checked;
-        if (!item.checked) item.inBasket = false;
+        item.checked = cb.checked === true;
+        if (item.checked !== true) item.inBasket = false;
         saveData();
         render();
         const panel = document.getElementById("selectedPanel");
@@ -752,10 +760,10 @@ function showSelected() {
 }
 
 function toggleBasket(catIndex, itemIndex, value) {
-  data[catIndex].items[itemIndex].inBasket = value;
+  data[catIndex].items[itemIndex].inBasket = value === true;
   saveData();
-  showSelected();
   render();
+  showSelected();
 }
 
 function checkAllBasket() {
@@ -856,6 +864,15 @@ function copySelected() {
   }).catch(() => {
     alert(text);
   });
+}
+
+function refreshCountersOnly() {
+  saveData();
+  render();
+  const panel = document.getElementById("selectedPanel");
+  if (panel && panel.style.display === "block") {
+    showSelected();
+  }
 }
 
 function resetShoppingTrip() {
