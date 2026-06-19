@@ -1085,6 +1085,7 @@ function openSettings() {
   overlay.dataset.children = JSON.stringify(config.children);
 
   renderSettingsNameFields();
+  renderSettingsAddCategoryOptions();
   renderDuplicateCategoryOptions();
   renderDuplicatePeopleList();
   assignCollapsedCategories = {};
@@ -1319,6 +1320,70 @@ function removePersonFromSelectedItems() {
   render();
   renderAssignArticleList();
   alert(`Prénom retiré de ${targets.length} article(s).`);
+}
+
+
+function renderSettingsAddCategoryOptions() {
+  const select = document.getElementById("settingsAddCategory");
+  if (!select) return;
+
+  select.innerHTML = "";
+  data.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.name;
+    option.textContent = cat.name;
+    select.appendChild(option);
+  });
+}
+
+function addItemFromSettings() {
+  const categoryName = document.getElementById("settingsAddCategory").value;
+  const input = document.getElementById("settingsAddItemName");
+  const name = input.value.trim();
+
+  if (!categoryName) {
+    alert("Choisis une catégorie.");
+    return;
+  }
+
+  if (!name) {
+    alert("Inscris le nom de l'article.");
+    return;
+  }
+
+  const cat = data.find(c => c.name === categoryName);
+  if (!cat) {
+    alert("Catégorie introuvable.");
+    return;
+  }
+
+  if (cat.items.some(item => item.name.toLowerCase() === name.toLowerCase())) {
+    alert("Cet article existe déjà dans cette catégorie.");
+    return;
+  }
+
+  cat.items.push({
+    name: name,
+    checked: false,
+    inBasket: false,
+    person: ""
+  });
+
+  cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+
+  // Si cet article avait été supprimé avant, on le retire de la liste des suppressions locales.
+  const deleted = getDeletedOfficialItems();
+  if (deleted[categoryName]) {
+    deleted[categoryName] = deleted[categoryName].filter(itemName => itemName.toLowerCase() !== name.toLowerCase());
+    saveDeletedOfficialItems(deleted);
+  }
+
+  saveData();
+  input.value = "";
+  render();
+  renderSettingsAddCategoryOptions();
+  renderAssignArticleList();
+  alert("Article ajouté dans « " + categoryName + " ».");
 }
 
 function renderDuplicateCategoryOptions() {
@@ -1929,6 +1994,13 @@ if (settingsOverlayEl) {
     if (e.target === settingsOverlayEl) closeSettings();
   });
 }
+const settingsAddItemEl = document.getElementById("settingsAddItemName");
+if (settingsAddItemEl) {
+  settingsAddItemEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addItemFromSettings();
+  });
+}
+
 const personInputEl = document.getElementById("personInput");
 if (personInputEl) {
   personInputEl.addEventListener("keydown", (e) => {
