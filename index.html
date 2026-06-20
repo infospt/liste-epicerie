@@ -3422,6 +3422,147 @@ body:not(.home-mode) #homePanel {
       font-size:14px;
     }
 
+  
+    /*
+    ---------------------------------------------------------------------------
+    BLOCAGE DE L'ÉCRAN POUR LE MESSAGE "AUCUN ARTICLE COCHÉ"
+    ---------------------------------------------------------------------------
+    Quand ce message est affiché, un voile transparent bloque tous les clics
+    sur le reste de l'application. Seul le panneau avec le bouton Fermer reste
+    cliquable.
+    ---------------------------------------------------------------------------
+    */
+    body.no-article-modal::before {
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:88;
+      background:
+        radial-gradient(circle at top, rgba(116, 201, 44, .22), transparent 38%),
+        linear-gradient(180deg, rgba(14, 58, 28, .42), rgba(10, 38, 22, .58));
+      backdrop-filter:blur(8px);
+    }
+
+    body.no-article-modal #selectedPanel {
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -50%);
+      z-index:89;
+      width:min(92%, 430px);
+      margin:0;
+      padding:22px 20px 18px;
+      pointer-events:auto;
+      border:1px solid rgba(116, 201, 44, .36) !important;
+      border-radius:26px !important;
+      background:linear-gradient(180deg, #FFFFFF 0%, #F7FFF1 56%, #EFFBE8 100%) !important;
+      box-shadow:0 24px 62px rgba(16, 83, 34, .30), 0 4px 16px rgba(0,0,0,.10) !important;
+      overflow:hidden;
+    }
+
+    body.no-article-modal #selectedPanel::before {
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:7px;
+      background:linear-gradient(90deg, #1C8C2F 0%, #74C92C 55%, #C8E85B 100%);
+      border-radius:26px 26px 0 0;
+    }
+
+  
+    /*
+    ---------------------------------------------------------------------------
+    CADRAGE DU MESSAGE "AUCUN ARTICLE COCHÉ"
+    ---------------------------------------------------------------------------
+    Le message et le bouton Fermer sont dans le même cadrage.
+    Le bouton Fermer est placé sous le message.
+    ---------------------------------------------------------------------------
+    */
+    .no-article-box {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      width:100%;
+      max-width:360px;
+      margin:0 auto;
+      padding:8px 0 4px;
+      text-align:center;
+    }
+
+    .no-article-box .remaining-summary {
+      position:static !important;
+      top:auto !important;
+      left:auto !important;
+      right:auto !important;
+      z-index:auto !important;
+      width:100%;
+      max-width:360px;
+      margin:0 auto;
+      padding:18px 18px 16px;
+      align-self:center;
+      order:1;
+      border:1px solid rgba(116, 201, 44, .40);
+      border-radius:20px;
+      background:linear-gradient(180deg, #FFFFFF 0%, #F5FFF0 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.90), 0 10px 24px rgba(28, 140, 47, .10) !important;
+      color:#1F4D2A;
+    }
+
+    .no-article-box .remaining-summary .message-eyebrow {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 12px;
+      margin-bottom:10px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #EAFBE2, #FFFFFF);
+      border:1px solid rgba(116, 201, 44, .45);
+      color:#1C8C2F;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .no-article-box .remaining-summary .message-title {
+      display:block;
+      font-size:22px;
+      line-height:1.2;
+      font-weight:900;
+      color:#173821;
+      margin-bottom:8px;
+    }
+
+    .no-article-box .remaining-summary .message-subtitle {
+      display:block;
+      font-size:14px;
+      line-height:1.45;
+      color:#3D5D40;
+      font-weight:700;
+    }
+
+    .no-article-box button {
+      width:min(100%, 230px);
+      margin:0 auto;
+      padding:13px 18px;
+      align-self:center;
+      order:2;
+      border-radius:16px !important;
+      background:linear-gradient(135deg, #74C92C 0%, #1C8C2F 100%) !important;
+      color:#FFFFFF !important;
+      border:1px solid rgba(28, 140, 47, .45) !important;
+      box-shadow:0 12px 24px rgba(28, 140, 47, .24), inset 0 1px 0 rgba(255,255,255,.30) !important;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    .no-article-box button:hover {
+      transform:translateY(-1px);
+      box-shadow:0 16px 28px rgba(28, 140, 47, .30), inset 0 1px 0 rgba(255,255,255,.30) !important;
+    }
+
   </style>
 </head>
 <body class="home-mode">
@@ -5226,13 +5367,35 @@ function showSelected() {
     if (i.checked && i.inBasket) basketTotal++;
   }));
 
+  // Si aucun article n'est coché, on affiche seulement un message simple.
+  // On n'affiche pas le titre "Articles cochés", ni les boutons du panier.
+  if (total === 0) {
+    panel.innerHTML = `
+      <div class="no-article-box">
+        <div class="remaining-summary">
+          <span class="message-eyebrow">Articles cochés</span>
+          <span class="message-title">Aucun article coché actuellement.</span>
+          <span class="message-subtitle">Cochez quelques articles dans vos catégories pour créer votre liste à acheter.</span>
+        </div>
+        <button type="button" class="secondary" onclick="showAll()">Fermer</button>
+      </div>
+    `;
+
+    // Quand le message est affiché, on bloque le reste de l'application.
+    // L'utilisateur doit cliquer sur Fermer avant de continuer.
+    document.body.classList.add("no-article-modal");
+    panel.classList.remove("has-fixed-message");
+    panel.style.display = "block";
+    return;
+  }
+
+  document.body.classList.remove("no-article-modal");
+
   let remaining = total - basketTotal;
   let html = "<h2>Articles cochés</h2>";
   html += `<div class="basket-summary">Panier : ${basketTotal} / ${total} article(s)</div>`;
 
-  if (total === 0) {
-    html += `<div class="remaining-summary">Aucun article coché pour le moment.</div>`;
-  } else if (remaining === 0) {
+  if (remaining === 0) {
     html += `<div class="remaining-summary done">Tout est dans votre panier.</div>`;
   } else if (remaining === 1) {
     html += `<div class="remaining-summary">Il vous reste 1 article à ajouter dans votre panier.</div>`;
@@ -5269,8 +5432,6 @@ function showSelected() {
       html += "</tbody></table>";
     }
   });
-
-  if (!total) html += `<div class="empty">Aucun article coché pour le moment.</div>`;
 
   panel.innerHTML = html;
   panel.classList.add("has-fixed-message");
@@ -5332,6 +5493,7 @@ Revient à l'affichage complet de toutes les catégories.
 -------------------------------------------------------------------------------
 */
 function showAll() {
+  document.body.classList.remove("no-article-modal");
   document.getElementById("selectedPanel").style.display = "none";
   document.getElementById("selectedPanel").classList.remove("has-fixed-message");
   selectedLetter = "TOUS";
