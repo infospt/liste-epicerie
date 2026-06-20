@@ -3385,6 +3385,43 @@ body:not(.home-mode) #homePanel {
       }
     }
 
+  
+    /*
+    ---------------------------------------------------------------------------
+    CHOIX DE PARTAGE
+    ---------------------------------------------------------------------------
+    Petite fenêtre qui apparaît au-dessus de la barre du bas.
+    Elle permet de choisir Messenger ou Texto après avoir cliqué sur Partager.
+    ---------------------------------------------------------------------------
+    */
+    .share-choices {
+      position:fixed;
+      left:50%;
+      bottom:78px;
+      transform:translateX(-50%);
+      z-index:35;
+      display:none;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      width:min(92%, 430px);
+      padding:10px;
+      border:1px solid rgba(28, 140, 47, .22);
+      border-radius:18px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 14px 34px rgba(24, 62, 36, .18);
+      backdrop-filter:blur(8px);
+    }
+
+    .share-choices.show {
+      display:grid;
+    }
+
+    .share-choices button {
+      border-radius:14px;
+      padding:12px 10px;
+      font-size:14px;
+    }
+
   </style>
 </head>
 <body class="home-mode">
@@ -3529,20 +3566,15 @@ body:not(.home-mode) #homePanel {
     ==========================================================================
     ACTIONS RAPIDES
     ==========================================================================
-    Boutons pour accéder rapidement aux fonctions principales :
-    - voir les articles cochés
-    - ouvrir les paramètres
-    - ouvrir toutes les catégories
-    - réinitialiser la course
+    Boutons pour afficher les articles cochés ou revenir à la liste complète.
+    Les autres actions ont été retirées pour alléger l'affichage.
     ==========================================================================
     -->
     <section class="quick-panel">
       <div class="quick-title">Actions rapides</div>
       <div class="quick-actions">
         <button onclick="showSelected()">Voir les articles cochés</button>
-        <button class="secondary" onclick="openSettings()">Paramètres</button>
-        <button class="secondary" onclick="expandAll()">Ouvrir catégories</button>
-        <button class="danger" onclick="resetShoppingTrip()">Réinitialiser</button>
+        <button class="secondary" onclick="showAll()">Revenir à la liste complète</button>
       </div>
     </section>
 
@@ -3726,12 +3758,24 @@ body:not(.home-mode) #homePanel {
   Sert à accéder rapidement aux articles cochés, au partage et à la réinitialisation.
   ============================================================================
   -->
-  <div class="bottom-bar bottom-bar-5">
+  <div class="bottom-bar bottom-bar-4">
     <button class="secondary" onclick="returnToHomePage()">Accueil</button>
     <button onclick="showSelected()">Articles cochés</button>
-    <button class="secondary" onclick="shareByMessenger()">Messenger</button>
-    <button class="green" onclick="shareBySMS()">Texto</button>
+    <button class="green" onclick="toggleShareChoices()">Partager</button>
     <button class="danger" onclick="resetShoppingTrip()">Réinitialiser</button>
+  </div>
+
+  <!--
+  ============================================================================
+  CHOIX DE PARTAGE
+  ============================================================================
+  Cette petite fenêtre apparaît quand on clique sur Partager.
+  Elle donne ensuite le choix entre Messenger ou Texto.
+  ============================================================================
+  -->
+  <div id="shareChoices" class="share-choices">
+    <button type="button" onclick="shareByMessenger(); closeShareChoices();">Messenger</button>
+    <button type="button" class="green" onclick="shareBySMS(); closeShareChoices();">Texto</button>
   </div>
 
 <script>
@@ -5159,7 +5203,10 @@ function addItem(catIndex, value) {
   cat.items.push({ name, checked:false, inBasket:false, quantity:1, person:"", store:"" });
   cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
   saveData();
-  selectedLetter = normalizeLetter(name) || "TOUS";
+  // On garde l'affichage sur TOUS après l'ajout.
+  // Avant, l'application filtrait par la première lettre de l'article ajouté,
+  // ce qui faisait croire que les autres articles avaient disparu.
+  selectedLetter = "TOUS";
   render();
 }
 
@@ -5340,6 +5387,32 @@ shareBySMS()
 Ouvre l'application SMS avec la liste préparée.
 -------------------------------------------------------------------------------
 */
+
+/*
+-------------------------------------------------------------------------------
+toggleShareChoices()
+Affiche ou cache les choix de partage dans la barre du bas.
+-------------------------------------------------------------------------------
+*/
+function toggleShareChoices() {
+  const box = document.getElementById("shareChoices");
+  if (!box) return;
+  box.classList.toggle("show");
+}
+
+
+/*
+-------------------------------------------------------------------------------
+closeShareChoices()
+Ferme les choix de partage.
+-------------------------------------------------------------------------------
+*/
+function closeShareChoices() {
+  const box = document.getElementById("shareChoices");
+  if (!box) return;
+  box.classList.remove("show");
+}
+
 function shareBySMS() {
   const text = buildSelectedText();
   const encoded = encodeURIComponent(text);
