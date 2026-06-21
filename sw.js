@@ -1,4 +1,4 @@
-const CACHE_NAME = "ma-liste-epicerie-v4";
+const CACHE_NAME = "ma-liste-epicerie-v7";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -9,18 +9,43 @@ const FILES_TO_CACHE = [
 ];
 
 self.addEventListener("install", event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(names => {
+      return Promise.all(
+        names
+          .filter(name => name !== CACHE_NAME)
+          .map(name => caches.delete(name))
+      );
+    }).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener("fetch", event => {
+  const request = event.request;
+
+  if (request.mode === "navigate" || request.destination === "document") {
+    event.respondWith(
+      fetch(request, { cache: "no-store" })
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put("./index.html", clone));
+          return response;
+        })
+        .catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(request).then(cached => {
+      return cached || fetch(request);
+    })
   );
 });
