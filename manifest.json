@@ -1,22 +1,27 @@
 {
-  "name": "Ma liste d'épicerie",
+  "name": "Ma liste d’épicerie",
   "short_name": "Épicerie",
-  "description": "Application de liste d'épicerie simple et pratique.",
+  "description": "Application simple pour préparer et partager une liste d’épicerie.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#FFD54A",
-  "theme_color": "#1C8C2F",
-  "orientation": "portrait",
+  "background_color": "#F8C800",
+  "theme_color": "#F8C800",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
+      "src": "./icon-180.png",
+      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
