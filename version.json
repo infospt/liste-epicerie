@@ -1,6 +1,6 @@
 {
-  "version": "2.0.4",
-  "latestVersion": "2.0.4",
-  "cache": "v12",
-  "message": "Correction : Articles cochés devient une vraie fenêtre bloquante. Seules les cases du panier et Fermer fonctionnent."
+  "latestVersion": "2.0.5",
+  "version": "2.0.5",
+  "cache": "v13",
+  "cacheName": "ma-liste-epicerie-v13"
 }
