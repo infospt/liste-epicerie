@@ -1,15 +1,22 @@
-const CACHE_NAME = "ma-liste-epicerie-v9";
+// Ma liste d'épicerie — service worker minimal
+// Version cache : v10
+const CACHE_NAME = "ma-liste-epicerie-v10";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys()
-      .then(names => Promise.all(names.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))))
-      .then(() => self.registration.unregister())
-      .then(() => self.clients.matchAll())
-      .then(clients => Promise.all(clients.map(client => client.navigate(client.url))))
-  );
+  event.waitUntil((async () => {
+    if (self.registration.navigationPreload) {
+      await self.registration.navigationPreload.enable().catch(() => {});
+    }
+    const names = await caches.keys();
+    await Promise.all(names.map(name => caches.delete(name)));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener("fetch", event => {
+  event.respondWith(fetch(event.request));
 });

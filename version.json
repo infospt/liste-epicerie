@@ -1,5 +1,6 @@
 {
-  "latestVersion": "2.0.1",
-  "cacheVersion": "v9",
-  "message": "Votre application est à jour."
+  "version": "2.0.2",
+  "latestVersion": "2.0.2",
+  "cache": "v10",
+  "message": "Correction : un seul bloc À propos de l'application dans les paramètres."
 }
