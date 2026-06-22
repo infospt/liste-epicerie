@@ -1,19 +1,17 @@
-// Service worker minimal — version 2.0.15 / cache v23
-// Ne met pas l'application en cache pour éviter de bloquer les mises à jour.
-self.addEventListener('install', event => {
+const CACHE_VERSION = "v24";
+const APP_CACHE = "ma-liste-epicerie-v24";
+
+self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    if (self.caches) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map(key => caches.delete(key)));
-    }
-    await self.clients.claim();
-  })());
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener("fetch", event => {
   event.respondWith(fetch(event.request));
 });
