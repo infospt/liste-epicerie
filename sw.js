@@ -1,6 +1,6 @@
 // Ma liste d'épicerie — service worker minimal
-// Version cache : v11
-const CACHE_NAME = "ma-liste-epicerie-v11";
+// Version cache : v12
+const CACHE_NAME = "ma-liste-epicerie-v12";
 
 self.addEventListener("install", event => {
   self.skipWaiting();

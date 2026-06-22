@@ -1,6 +1,6 @@
 {
-  "version": "2.0.3",
-  "latestVersion": "2.0.3",
-  "cache": "v11",
-  "message": "Correction : Articles cochés bloque les catégories et permet seulement de cocher le panier ou fermer."
+  "version": "2.0.4",
+  "latestVersion": "2.0.4",
+  "cache": "v12",
+  "message": "Correction : Articles cochés devient une vraie fenêtre bloquante. Seules les cases du panier et Fermer fonctionnent."
 }
