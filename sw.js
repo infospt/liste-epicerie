@@ -1,5 +1,5 @@
-const CACHE_VERSION = "v24";
-const APP_CACHE = "ma-liste-epicerie-v24";
+const CACHE_VERSION = "v25";
+const APP_CACHE = "ma-liste-epicerie-v25";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
