@@ -1,4 +1,4 @@
-// Service worker minimal — version 2.0.6 / cache v14
+// Service worker minimal — version 2.0.7 / cache v15
 // Ne met pas l'application en cache pour éviter de bloquer les mises à jour.
 self.addEventListener('install', event => {
   self.skipWaiting();
