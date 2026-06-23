@@ -6215,16 +6215,13 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
-        <h3>Affichage des prénoms et des endroits</h3>
-        <label class="settings-check">
-          <input id="showArticleNames" type="checkbox">
-          Afficher le choix du prénom à côté des articles
-        </label>
+        <h3>Affichage des endroits où acheter</h3>
+        <input id="showArticleNames" type="checkbox" style="display:none;" aria-hidden="true">
         <label class="settings-check">
           <input id="showStoreSelect" type="checkbox">
           Afficher le choix « Où acheter » à côté des articles
         </label>
-        <div class="settings-note">Par défaut, aucun nom n'est choisi sur les articles. L'option « Où acheter » est activée par défaut.</div>
+        <div class="settings-note">L'option « Où acheter » est activée par défaut. Pour les prénoms, utilise la section « Assigner un prénom aux articles existants ».</div>
       </div>
 
       <div class="settings-section">
@@ -6258,7 +6255,7 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
-        <h3>Créer des articles personnalisés par prénom</h3>
+        <h3>Créer des articles personnalisés</h3>
         <div class="settings-note">Exemple : écris <strong>Médicaments</strong>, choisis Pierre et Nathalie, puis l'application crée <strong>Médicaments Pierre</strong> et <strong>Médicaments Nathalie</strong>.</div>
         <select id="duplicateCategory" class="settings-select"></select>
         <input id="duplicateBaseItem" class="settings-text" type="text" placeholder="Nom de base ex. Médicaments">
@@ -6293,8 +6290,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.35</div>
-            <div class="version-visible-small">Cache : v43</div>
+            <div class="version-visible-number">version 2.0.36</div>
+            <div class="version-visible-small">Cache : v44</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -6840,7 +6837,7 @@ Indique si les prénoms assignés doivent être visibles sur les articles.
 -------------------------------------------------------------------------------
 */
 function shouldShowArticleNames() {
-  return loadPeopleConfig().showArticleNames === true;
+  return false;
 }
 
 function shouldShowStoreSelect() {
@@ -6925,7 +6922,7 @@ function openSettings() {
 
   document.getElementById("parentCount").value = config.parents.length;
   document.getElementById("childCount").value = config.children.length;
-  document.getElementById("showArticleNames").checked = config.showArticleNames === true;
+  document.getElementById("showArticleNames").checked = false;
   document.getElementById("showStoreSelect").checked = config.showStoreSelect !== false;
   overlay.dataset.parents = JSON.stringify(config.parents);
   overlay.dataset.children = JSON.stringify(config.children);
@@ -7021,7 +7018,7 @@ function collectSettingsConfig() {
   return {
     parents,
     children,
-    showArticleNames: document.getElementById("showArticleNames").checked === true,
+    showArticleNames: false,
     showStoreSelect: document.getElementById("showStoreSelect").checked === true
   };
 }
@@ -10420,7 +10417,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.35";
+const APP_VERSION = "2.0.36";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10642,15 +10639,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v43";
-const APP_CACHE_NAME = "ma-liste-epicerie-v43";
+const APP_CACHE_VERSION = "v44";
+const APP_CACHE_NAME = "ma-liste-epicerie-v44";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.35");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.36");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10702,8 +10699,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.35</div>
-        <div class="version-visible-small">Cache : v43</div>
+        <div class="version-visible-number">version 2.0.36</div>
+        <div class="version-visible-small">Cache : v44</div>
       </div>
     </div>
   `;
