@@ -1,5 +1,4 @@
-const CACHE_VERSION = "v25";
-const APP_CACHE = "ma-liste-epicerie-v25";
+const CACHE_NAME = "ma-liste-epicerie-v28";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
@@ -7,11 +6,12 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
+    caches.keys().then(keys =>
+      Promise.all(keys.map(key => caches.delete(key)))
+    ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener("fetch", event => {
-  event.respondWith(fetch(event.request));
+  event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
 });
