@@ -6488,8 +6488,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.61</div>
-            <div class="version-visible-small">Cache : v69</div>
+            <div class="version-visible-number">version 2.0.62</div>
+            <div class="version-visible-small">Cache : v70</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10613,7 +10613,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.61";
+const APP_VERSION = "2.0.62";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10835,15 +10835,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v69";
-const APP_CACHE_NAME = "ma-liste-epicerie-v69";
+const APP_CACHE_VERSION = "v70";
+const APP_CACHE_NAME = "ma-liste-epicerie-v70";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.61");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.62");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10895,8 +10895,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.61</div>
-        <div class="version-visible-small">Cache : v69</div>
+        <div class="version-visible-number">version 2.0.62</div>
+        <div class="version-visible-small">Cache : v70</div>
       </div>
     </div>
   `;
@@ -11616,7 +11616,7 @@ body:not(.home-mode) .app-logo {
 }
 
 
-/* v2.0.61 - Paramètres : permettre de remonter jusqu'en haut */
+/* v2.0.62 - Paramètres : permettre de remonter jusqu'en haut */
 body.settings-open {
   overflow:hidden !important;
 }
@@ -11644,6 +11644,7 @@ body.settings-open .settings-box {
 
   function categoryModeActive() {
     return !document.body.classList.contains('home-mode') &&
+           !document.body.classList.contains('settings-open') &&
            !document.body.classList.contains('articles-checked-modal') &&
            !document.body.classList.contains('share-filter-modal') &&
            !document.body.classList.contains('no-article-modal');
@@ -11680,7 +11681,7 @@ body.settings-open .settings-box {
 
 
 <script>
-/* v2.0.61 - Paramètres : ouvrir en haut */
+/* v2.0.62 - Paramètres : ouvrir en haut */
 (function(){
   const previousOpenSettings = window.openSettings;
   if (typeof previousOpenSettings === 'function') {
