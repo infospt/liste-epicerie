@@ -5821,7 +5821,43 @@ body:not(.home-mode) #homePanel {
       margin-bottom:28px !important;
     }
 
-  </style>
+  
+
+/* v2.0.34 - Paramètres : sections principales en accordéon */
+.settings-section.settings-auto-collapsible > h3 {
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 !important;
+  padding:2px 0;
+  user-select:none;
+}
+.settings-section.settings-auto-collapsible > h3::after {
+  content:"⌄";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+.settings-section.settings-auto-collapsible.settings-section-collapsed > h3::after {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible.settings-section-collapsed > :not(h3) {
+  display:none !important;
+}
+
+</style>
 
   <!--
   ============================================================================
@@ -6257,8 +6293,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.33</div>
-            <div class="version-visible-small">Cache : v41</div>
+            <div class="version-visible-number">version 2.0.34</div>
+            <div class="version-visible-small">Cache : v42</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10384,7 +10420,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.33";
+const APP_VERSION = "2.0.34";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10606,15 +10642,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v41";
-const APP_CACHE_NAME = "ma-liste-epicerie-v40";
+const APP_CACHE_VERSION = "v42";
+const APP_CACHE_NAME = "ma-liste-epicerie-v42";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.32");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.34");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10666,8 +10702,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.33</div>
-        <div class="version-visible-small">Cache : v41</div>
+        <div class="version-visible-number">version 2.0.34</div>
+        <div class="version-visible-small">Cache : v42</div>
       </div>
     </div>
   `;
@@ -10899,6 +10935,66 @@ body:not(.home-mode) .category:not(.collapsed) > .cat-title .chevron {
     if (overlay && overlay.style.display !== 'block') {
       markSettingsClosed();
     }
+  });
+})();
+</script>
+
+
+
+<script>
+/* v2.0.34 - Paramètres : options en sections repliables */
+(function() {
+  function prepareSettingsCollapses() {
+    const settingsBox = document.querySelector('#settingsOverlay .settings-box');
+    if (!settingsBox) return;
+
+    const sections = settingsBox.querySelectorAll(':scope > .settings-section');
+    sections.forEach(function(section) {
+      const title = section.querySelector(':scope > h3');
+      if (!title) return;
+
+      section.classList.add('settings-auto-collapsible');
+      title.setAttribute('role', 'button');
+      title.setAttribute('tabindex', '0');
+
+      if (title.dataset.collapseReady === '1') return;
+      title.dataset.collapseReady = '1';
+
+      function toggleSection() {
+        section.classList.toggle('settings-section-collapsed');
+      }
+
+      title.addEventListener('click', toggleSection);
+      title.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleSection();
+        }
+      });
+    });
+  }
+
+  function collapseAllSettingsSections() {
+    prepareSettingsCollapses();
+    const settingsBox = document.querySelector('#settingsOverlay .settings-box');
+    if (!settingsBox) return;
+
+    settingsBox.querySelectorAll(':scope > .settings-section.settings-auto-collapsible').forEach(function(section) {
+      section.classList.add('settings-section-collapsed');
+    });
+  }
+
+  const previousOpenSettings = window.openSettings;
+  if (typeof previousOpenSettings === 'function') {
+    window.openSettings = function() {
+      const result = previousOpenSettings.apply(this, arguments);
+      setTimeout(collapseAllSettingsSections, 0);
+      return result;
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    prepareSettingsCollapses();
   });
 })();
 </script>
