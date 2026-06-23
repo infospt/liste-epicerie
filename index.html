@@ -6386,11 +6386,10 @@ body.home-mode .hero-poster-image {
 
       <div class="settings-section">
         <h3>Créer des articles personnalisés</h3>
-        <div class="settings-note">Exemple : écris <strong>Médicaments</strong>, choisis Pierre et Nathalie, puis l'application crée <strong>Médicaments Pierre</strong> et <strong>Médicaments Nathalie</strong>.</div>
+        <div class="settings-note">Choisis une catégorie, inscris le nom de l'article personnalisé, puis clique sur Créer l'article.</div>
         <select id="duplicateCategory" class="settings-select"></select>
-        <input id="duplicateBaseItem" class="settings-text" type="text" placeholder="Nom de base ex. Médicaments">
-        <div id="duplicatePeopleList" class="duplicate-people-list"></div>
-        <button type="button" onclick="duplicateItemForPeople()">Créer les articles</button>
+        <input id="duplicateBaseItem" class="settings-text" type="text" placeholder="Nom de l'article ex. Médicaments">
+        <button type="button" onclick="duplicateItemForPeople()">Créer l'article</button>
       </div>
 
       <div class="settings-section">
@@ -6420,8 +6419,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.38</div>
-            <div class="version-visible-small">Cache : v46</div>
+            <div class="version-visible-number">version 2.0.39</div>
+            <div class="version-visible-small">Cache : v47</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -7427,38 +7426,29 @@ function renderDuplicatePeopleList() {
 
 function duplicateItemForPeople() {
   const categoryName = document.getElementById("duplicateCategory").value;
-  const base = document.getElementById("duplicateBaseItem").value.trim();
-  const selectedNames = Array.from(document.querySelectorAll(".duplicate-person:checked")).map(input => input.value);
+  const itemName = document.getElementById("duplicateBaseItem").value.trim();
 
   if (!categoryName) {
     alert("Choisis une catégorie.");
     return;
   }
-  if (!base) {
-    alert("Inscris le nom de base de l'article. Exemple : Médicaments");
-    return;
-  }
-  if (!selectedNames.length) {
-    alert("Choisis au moins un prénom.");
+  if (!itemName) {
+    alert("Inscris le nom de l'article. Exemple : Médicaments");
     return;
   }
 
   const cat = data.find(c => c.name === categoryName);
   if (!cat) return;
 
-  let added = 0;
-  selectedNames.forEach(name => {
-    const itemName = `${base} ${name}`.trim();
-    if (!cat.items.some(item => item.name.toLowerCase() === itemName.toLowerCase())) {
-      cat.items.push({ name: itemName, checked: false, inBasket: false, quantity: 1, person: "", store: "" });
-      added++;
-    }
-  });
-
-  cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
-  saveData();
-  render();
-  alert(added ? `${added} article(s) ajouté(s).` : "Ces articles existent déjà.");
+  if (!cat.items.some(item => item.name.toLowerCase() === itemName.toLowerCase())) {
+    cat.items.push({ name: itemName, checked: false, inBasket: false, quantity: 1, person: "", store: "" });
+    cat.items.sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+    saveData();
+    render();
+    alert("Article ajouté.");
+  } else {
+    alert("Cet article existe déjà.");
+  }
 }
 
 
@@ -10547,7 +10537,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.38";
+const APP_VERSION = "2.0.39";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10769,15 +10759,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v46";
-const APP_CACHE_NAME = "ma-liste-epicerie-v46";
+const APP_CACHE_VERSION = "v47";
+const APP_CACHE_NAME = "ma-liste-epicerie-v47";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.38");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.39");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10829,8 +10819,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.38</div>
-        <div class="version-visible-small">Cache : v46</div>
+        <div class="version-visible-number">version 2.0.39</div>
+        <div class="version-visible-small">Cache : v47</div>
       </div>
     </div>
   `;
