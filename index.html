@@ -5857,6 +5857,60 @@ body:not(.home-mode) #homePanel {
   display:none !important;
 }
 
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
   <!--
@@ -5989,6 +6043,60 @@ body.home-mode .hero-poster-image {
     max-height:calc(100vh - 36px) !important;
   }
 }
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
 </head>
@@ -6290,8 +6398,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.36</div>
-            <div class="version-visible-small">Cache : v44</div>
+            <div class="version-visible-number">version 2.0.37</div>
+            <div class="version-visible-small">Cache : v45</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10417,7 +10525,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.36";
+const APP_VERSION = "2.0.37";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10639,15 +10747,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v44";
-const APP_CACHE_NAME = "ma-liste-epicerie-v44";
+const APP_CACHE_VERSION = "v45";
+const APP_CACHE_NAME = "ma-liste-epicerie-v45";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.36");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.37");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10699,8 +10807,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.36</div>
-        <div class="version-visible-small">Cache : v44</div>
+        <div class="version-visible-number">version 2.0.37</div>
+        <div class="version-visible-small">Cache : v45</div>
       </div>
     </div>
   `;
@@ -10736,6 +10844,60 @@ body.articles-checked-locked .alpha-bar,
 body.articles-checked-locked .collapse-tools {
   pointer-events: none !important;
 }
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
 <script>
@@ -10857,6 +11019,60 @@ body.articles-checked-modal #selectedPanel input[type="checkbox"] {
   cursor: pointer !important;
   opacity: 1 !important;
 }
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
 
@@ -10869,6 +11085,60 @@ body:not(.home-mode) #selectedPanel .remaining-summary:not(.done) {
   border:1px solid #1D7F43 !important;
   box-shadow:0 6px 16px rgba(29,127,67,.22) !important;
 }
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
 
@@ -10896,6 +11166,60 @@ body:not(.home-mode) .category:not(.collapsed) > .cat-title .chevron {
   color:#1D7F43 !important;
   border-color:#FFFFFF !important;
 }
+
+/* v2.0.37 - Paramètres : couleurs uniformes des choix repliables */
+#assignCollapseHeader {
+  width:100% !important;
+  background:linear-gradient(180deg, #F7FBFF, #FFFFFF) !important;
+  color:var(--green) !important;
+  border:1px solid var(--border) !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:2px 0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+#assignCollapseHeader .arrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--green);
+  border:1px solid var(--border);
+  font-size:18px;
+  line-height:1;
+  flex:0 0 auto;
+  transition:transform .18s ease;
+}
+#assignCollapseHeader.collapsed .arrow {
+  transform:rotate(-90deg);
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  background:linear-gradient(135deg, var(--green), #2FB62C) !important;
+  color:#ffffff !important;
+  border-color:var(--green) !important;
+  border-radius:16px !important;
+  padding:13px 18px !important;
+  box-shadow:0 4px 10px rgba(11,154,67,.18) !important;
+}
+.settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3::after,
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+
 </style>
 
 
