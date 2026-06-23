@@ -6192,7 +6192,7 @@ body.home-mode .hero-poster-image {
         Sert à définir combien de parents sont disponibles
         et à entrer leurs prénoms.
         -->
-        <h3>Parents</h3>
+        <h3>Prénoms des parents</h3>
         <div class="settings-line">
           <label for="parentCount">Nombre de parents</label>
           <input id="parentCount" type="number" min="0" max="10" value="2" onchange="renderSettingsNameFields(); renderDuplicatePeopleList();">
@@ -6206,7 +6206,7 @@ body.home-mode .hero-poster-image {
         Sert à définir combien d'enfants sont disponibles
         et à entrer leurs prénoms.
         -->
-        <h3>Enfants</h3>
+        <h3>Prénoms des enfants</h3>
         <div class="settings-line">
           <label for="childCount">Nombre d'enfants</label>
           <input id="childCount" type="number" min="0" max="20" value="0" onchange="renderSettingsNameFields(); renderDuplicatePeopleList();">
@@ -6215,7 +6215,7 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
-        <h3>Options des prénoms</h3>
+        <h3>Affichage des prénoms et des endroits</h3>
         <label class="settings-check">
           <input id="showArticleNames" type="checkbox">
           Afficher le choix du prénom à côté des articles
@@ -6228,7 +6228,7 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
-        <h3>Endroits où acheter</h3>
+        <h3>Ajouter ou gérer les endroits où acheter</h3>
         <div class="settings-note">Ajoute un magasin ou un endroit. Il apparaîtra ensuite dans le menu « Où acheter » des articles.</div>
         <div class="settings-store-row">
           <input id="newStoreName" class="settings-text" type="text" placeholder="Ex. Pharmacie, Boulangerie, Épicerie locale">
@@ -6239,7 +6239,7 @@ body.home-mode .hero-poster-image {
 
       <div class="settings-section">
         <button type="button" id="assignCollapseHeader" class="settings-collapse-header collapsed" onclick="toggleAssignSettings()">
-          <span>Insérer un prénom aux articles existants</span>
+          <span>Assigner un prénom aux articles existants</span>
           <span class="arrow">⌄</span>
         </button>
         <div id="assignCollapseContent" class="settings-collapse-content collapsed">
@@ -6258,7 +6258,7 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
-        <h3>Créer un article par prénom</h3>
+        <h3>Créer des articles personnalisés par prénom</h3>
         <div class="settings-note">Exemple : écris <strong>Médicaments</strong>, choisis Pierre et Nathalie, puis l'application crée <strong>Médicaments Pierre</strong> et <strong>Médicaments Nathalie</strong>.</div>
         <select id="duplicateCategory" class="settings-select"></select>
         <input id="duplicateBaseItem" class="settings-text" type="text" placeholder="Nom de base ex. Médicaments">
@@ -6272,7 +6272,7 @@ body.home-mode .hero-poster-image {
         Permet de supprimer un article à partir des Paramètres seulement.
         Cela garde la liste principale plus légère et plus propre.
         -->
-        <h3>Supprimer un article</h3>
+        <h3>Supprimer ou restaurer un article</h3>
         <div class="settings-note">Choisis une catégorie, puis l'article à supprimer. Cette option remplace le bouton Suppr. qui était affiché dans chaque article.</div>
         <select id="deleteCategorySelect" class="settings-select" onchange="renderDeleteArticleOptions()"></select>
         <select id="deleteArticleSelect" class="settings-select"></select>
@@ -6282,19 +6282,19 @@ body.home-mode .hero-poster-image {
 
 
       <div class="settings-section">
-        <h3>Personnes disponibles</h3>
+        <h3>Liste des personnes disponibles</h3>
         <div id="settingsPreview" class="settings-preview"></div>
       </div>
 
       <div class="settings-section about-app-section version-visible-section">
-        <h3>À propos de l'application</h3>
+        <h3>Version et mise à jour de l'application</h3>
         <div class="about-app-card">
           <div class="about-app-title">Ma liste d'épicerie</div>
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.34</div>
-            <div class="version-visible-small">Cache : v42</div>
+            <div class="version-visible-number">version 2.0.35</div>
+            <div class="version-visible-small">Cache : v43</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10420,7 +10420,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.34";
+const APP_VERSION = "2.0.35";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10642,15 +10642,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v42";
-const APP_CACHE_NAME = "ma-liste-epicerie-v42";
+const APP_CACHE_VERSION = "v43";
+const APP_CACHE_NAME = "ma-liste-epicerie-v43";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.34");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.35");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10697,13 +10697,13 @@ function ensureVersionVisibleInSettings() {
   const block = document.createElement("div");
   block.className = "settings-section about-app-section version-visible-section";
   block.innerHTML = `
-    <h3>À propos de l'application</h3>
+    <h3>Version et mise à jour de l'application</h3>
     <div class="about-app-card">
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.34</div>
-        <div class="version-visible-small">Cache : v42</div>
+        <div class="version-visible-number">version 2.0.35</div>
+        <div class="version-visible-small">Cache : v43</div>
       </div>
     </div>
   `;
