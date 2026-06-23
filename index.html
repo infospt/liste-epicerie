@@ -6486,8 +6486,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.52</div>
-            <div class="version-visible-small">Cache : v60</div>
+            <div class="version-visible-number">version 2.0.53</div>
+            <div class="version-visible-small">Cache : v61</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10611,7 +10611,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.52";
+const APP_VERSION = "2.0.53";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10833,15 +10833,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v60";
-const APP_CACHE_NAME = "ma-liste-epicerie-v60";
+const APP_CACHE_VERSION = "v61";
+const APP_CACHE_NAME = "ma-liste-epicerie-v61";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.52");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.53");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10893,8 +10893,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.52</div>
-        <div class="version-visible-small">Cache : v60</div>
+        <div class="version-visible-number">version 2.0.53</div>
+        <div class="version-visible-small">Cache : v61</div>
       </div>
     </div>
   `;
@@ -11446,6 +11446,97 @@ body:not(.home-mode) .category:not(.collapsed) > .cat-title .chevron {
   document.addEventListener('DOMContentLoaded', function() {
     prepareSettingsCollapses();
   });
+})();
+</script>
+
+
+
+<style>
+/* v2.0.53 - Empêcher le glissement de sortir des fenêtres Liste épicerie et Partager */
+body.articles-checked-modal,
+body.share-filter-modal,
+body.no-article-modal {
+  overscroll-behavior:none !important;
+  overflow:hidden !important;
+}
+body.share-filter-modal #selectedPanel {
+  position:fixed !important;
+  top:92px !important;
+  left:12px !important;
+  right:12px !important;
+  bottom:82px !important;
+  z-index:999999 !important;
+  overflow:auto !important;
+  margin:0 auto !important;
+  max-width:900px !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+body.articles-checked-modal #selectedPanel,
+body.no-article-modal #selectedPanel {
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+@media (max-width:719px) {
+  body.share-filter-modal #selectedPanel {
+    top:84px !important;
+    bottom:72px !important;
+    left:8px !important;
+    right:8px !important;
+  }
+}
+</style>
+<script>
+/* v2.0.53 - Bloque le pull-down/overscroll qui ramenait à la page principale */
+(function(){
+  let startY = 0;
+
+  function modalOpen() {
+    return document.body.classList.contains('articles-checked-modal') ||
+           document.body.classList.contains('share-filter-modal') ||
+           document.body.classList.contains('no-article-modal');
+  }
+
+  function getPanel() {
+    return document.getElementById('selectedPanel');
+  }
+
+  document.addEventListener('touchstart', function(event) {
+    if (!modalOpen()) return;
+    if (!event.touches || !event.touches.length) return;
+    startY = event.touches[0].clientY;
+  }, { passive:true });
+
+  document.addEventListener('touchmove', function(event) {
+    if (!modalOpen()) return;
+    const panel = getPanel();
+    if (!panel) return;
+
+    if (!panel.contains(event.target)) {
+      event.preventDefault();
+      return;
+    }
+
+    if (!event.touches || !event.touches.length) return;
+    const currentY = event.touches[0].clientY;
+    const movingDown = currentY > startY;
+    const movingUp = currentY < startY;
+    const maxScroll = panel.scrollHeight - panel.clientHeight;
+
+    if (maxScroll <= 0) {
+      event.preventDefault();
+      return;
+    }
+
+    if (movingDown && panel.scrollTop <= 0) {
+      event.preventDefault();
+      return;
+    }
+
+    if (movingUp && panel.scrollTop >= maxScroll - 1) {
+      event.preventDefault();
+    }
+  }, { passive:false });
 })();
 </script>
 
