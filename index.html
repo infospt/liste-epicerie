@@ -3573,7 +3573,7 @@ body:not(.home-mode) #homePanel {
       font-size:22px;
       line-height:1.2;
       font-weight:900;
-      color:#173821;
+      color:#FFFFFF;
       margin-bottom:8px;
     }
 
@@ -3581,7 +3581,7 @@ body:not(.home-mode) #homePanel {
       display:block;
       font-size:14px;
       line-height:1.45;
-      color:#3D5D40;
+      color:#FFFFFF;
       font-weight:700;
     }
 
@@ -5734,7 +5734,7 @@ body:not(.home-mode) #homePanel {
     }
 
 
-/* v2.0.24 — Image d’accueil réencodée proprement pour mobile. */
+/* v2.0.25 — Texte du message vide Articles panier en blanc. */
 </style>
 
   <!--
@@ -5762,7 +5762,7 @@ body:not(.home-mode) #homePanel {
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <meta name="app-version" content="2.0.24">
+  <meta name="app-version" content="2.0.23">
 
 <style>
 /*
@@ -10283,7 +10283,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.24";
+const APP_VERSION = "2.0.25";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10501,19 +10501,19 @@ VERSIONS DANS PARAMÈTRES
 -------------------------------------------------------------------------------
 - Version application : numéro dans le code index.html.
 - Version disponible : numéro lu dans version.json sur GitHub Pages.
-- Version cache : numéro du cache/service worker, ici v32.
+- Version cache : numéro du cache/service worker, ici v33.
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v32";
-const APP_CACHE_NAME = "ma-liste-epicerie-v32";
+const APP_CACHE_VERSION = "v33";
+const APP_CACHE_NAME = "ma-liste-epicerie-v33";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.24");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.23");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
