@@ -6210,8 +6210,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.27</div>
-            <div class="version-visible-small">Cache : v35</div>
+            <div class="version-visible-number">version 2.0.28</div>
+            <div class="version-visible-small">Cache : v36</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -6253,10 +6253,12 @@ body.home-mode .hero-poster-image {
   Sert à accéder rapidement aux articles panier, au partage et à la réinitialisation.
   ============================================================================
   -->
-  <div class="bottom-bar bottom-bar-5">
+  <div class="bottom-bar bottom-bar-4">
     <button class="secondary" onclick="returnToHomePage()">Accueil</button>
     <button onclick="showSelected()">Articles panier</button>
+    <!-- Voir liste épicerie désactivé v2.0.28
     <button class="green" onclick="showSimpleGroceryList()">Voir liste épicerie</button>
+    -->
     <button class="green" onclick="toggleShareChoices()">Partager</button>
     <button class="danger" onclick="resetShoppingTrip()">Réinitialiser</button>
   </div>
@@ -7984,67 +7986,69 @@ showSimpleGroceryList()
 Affiche la liste d'épicerie cochée dans un format simple, sans panier.
 -------------------------------------------------------------------------------
 */
-function showSimpleGroceryList() {
-  document.body.classList.remove("articles-checked-modal");
-  if (!hasCheckedItems()) {
-    const panel = document.getElementById("selectedPanel");
-    if (!panel) return;
-
-    panel.innerHTML = `
-      <div class="no-article-box">
-        <div class="remaining-summary">
-          <span class="message-eyebrow">Liste d'épicerie</span>
-          <span class="message-title">Aucun article coché.</span>
-          <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
-        </div>
-        <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-      </div>
-    `;
-
-    document.body.classList.add("no-article-modal");
-    panel.classList.remove("has-fixed-message");
-    panel.style.display = "block";
-    return;
-  }
-
-  closeShareChoices();
-  document.body.classList.remove("no-article-modal");
-
-  const panel = document.getElementById("selectedPanel");
-  let html = `<h2>Liste d'épicerie</h2>`;
-  html += `<div class="basket-summary simple-list-note">Format simple</div>`;
-  html += `<div class="simple-grocery-list">`;
-
-  data.forEach(cat => {
-    const selected = cat.items
-      .filter(i => i.checked)
-      .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
-
-    if (selected.length) {
-      html += `<div class="simple-category">`;
-      html += `<h3>${escapeHtml(cat.name)}</h3>`;
-      html += `<ul>`;
-      selected.forEach(i => {
-        html += `<li class="simple-line-row">
-          <span class="simple-item-name">${escapeHtml(i.name)}</span>
-          <span class="simple-item-qty">x${escapeHtml(String(i.quantity || 1))}</span>
-          <span class="simple-item-store">${i.store ? escapeHtml(i.store) : "Où acheter"}</span>
-        </li>`;
-      });
-      html += `</ul></div>`;
-    }
-  });
-
-  html += `</div>`;
-  html += `<div class="selected-actions">
-    <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-  </div>`;
-
-  panel.innerHTML = html;
-  panel.classList.add("has-fixed-message");
-  panel.style.display = "block";
-  window.scrollTo({ top:0, behavior:"smooth" });
-}
+// --- DÉSACTIVÉ v2.0.28 : traitement Voir liste épicerie commenté ---
+// function showSimpleGroceryList() {
+//   document.body.classList.remove("articles-checked-modal");
+//   if (!hasCheckedItems()) {
+//     const panel = document.getElementById("selectedPanel");
+//     if (!panel) return;
+// 
+//     panel.innerHTML = `
+//       <div class="no-article-box">
+//         <div class="remaining-summary">
+//           <span class="message-eyebrow">Liste d'épicerie</span>
+//           <span class="message-title">Aucun article coché.</span>
+//           <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
+//         </div>
+//         <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//       </div>
+//     `;
+// 
+//     document.body.classList.add("no-article-modal");
+//     panel.classList.remove("has-fixed-message");
+//     panel.style.display = "block";
+//     return;
+//   }
+// 
+//   closeShareChoices();
+//   document.body.classList.remove("no-article-modal");
+// 
+//   const panel = document.getElementById("selectedPanel");
+//   let html = `<h2>Liste d'épicerie</h2>`;
+//   html += `<div class="basket-summary simple-list-note">Format simple</div>`;
+//   html += `<div class="simple-grocery-list">`;
+// 
+//   data.forEach(cat => {
+//     const selected = cat.items
+//       .filter(i => i.checked)
+//       .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+// 
+//     if (selected.length) {
+//       html += `<div class="simple-category">`;
+//       html += `<h3>${escapeHtml(cat.name)}</h3>`;
+//       html += `<ul>`;
+//       selected.forEach(i => {
+//         html += `<li class="simple-line-row">
+//           <span class="simple-item-name">${escapeHtml(i.name)}</span>
+//           <span class="simple-item-qty">x${escapeHtml(String(i.quantity || 1))}</span>
+//           <span class="simple-item-store">${i.store ? escapeHtml(i.store) : "Où acheter"}</span>
+//         </li>`;
+//       });
+//       html += `</ul></div>`;
+//     }
+//   });
+// 
+//   html += `</div>`;
+//   html += `<div class="selected-actions">
+//     <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//   </div>`;
+// 
+//   panel.innerHTML = html;
+//   panel.classList.add("has-fixed-message");
+//   panel.style.display = "block";
+//   window.scrollTo({ top:0, behavior:"smooth" });
+// }
+// --- FIN DÉSACTIVÉ v2.0.28 ---
 
 
 /*
@@ -8888,77 +8892,79 @@ showSimpleGroceryList()
 Version avec filtre "Où acheter".
 -------------------------------------------------------------------------------
 */
-function showSimpleGroceryList() {
-  if (!hasCheckedItems()) {
-    const panel = document.getElementById("selectedPanel");
-    if (!panel) return;
-
-    panel.innerHTML = `
-      <div class="no-article-box">
-        <div class="remaining-summary">
-          <span class="message-eyebrow">Liste d'épicerie</span>
-          <span class="message-title">Aucun article coché.</span>
-          <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
-        </div>
-        <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-      </div>
-    `;
-
-    document.body.classList.add("no-article-modal");
-    panel.classList.remove("has-fixed-message");
-    panel.style.display = "block";
-    return;
-  }
-
-  closeShareChoices();
-  document.body.classList.remove("no-article-modal");
-
-  const panel = document.getElementById("selectedPanel");
-  const filteredTotal = countCheckedFilteredItems();
-
-  let html = `<h2>Liste d'épicerie</h2>`;
-  html += buildStoreFilterHtml("showSimpleGroceryList");
-  html += `<div class="basket-summary simple-list-note">Format simple</div>`;
-
-  if (filteredTotal === 0) {
-    html += `<div class="store-filter-message">Aucun article coché pour cet endroit.</div>`;
-  } else {
-    html += `<div class="simple-grocery-list">`;
-
-    data.forEach(cat => {
-      const selected = cat.items
-        .filter(i => i.checked && storeMatchesSelectedFilter(i))
-        .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
-
-      if (selected.length) {
-        html += `<div class="simple-category">`;
-        html += `<h3>${escapeHtml(cat.name)}</h3>`;
-        html += `<ul>`;
-
-        selected.forEach(i => {
-          html += `<li class="simple-line-row">
-            <span class="simple-item-name">${escapeHtml(i.name)}</span>
-            <span class="simple-item-qty">x${escapeHtml(String(i.quantity || 1))}</span>
-            <span class="simple-item-store">${escapeHtml(getStoreLabelForFilter(i))}</span>
-          </li>`;
-        });
-
-        html += `</ul></div>`;
-      }
-    });
-
-    html += `</div>`;
-  }
-
-  html += `<div class="selected-actions">
-    <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-  </div>`;
-
-  panel.innerHTML = html;
-  panel.classList.add("has-fixed-message");
-  panel.style.display = "block";
-  window.scrollTo({ top:0, behavior:"smooth" });
-}
+// --- DÉSACTIVÉ v2.0.28 : traitement Voir liste épicerie commenté ---
+// function showSimpleGroceryList() {
+//   if (!hasCheckedItems()) {
+//     const panel = document.getElementById("selectedPanel");
+//     if (!panel) return;
+// 
+//     panel.innerHTML = `
+//       <div class="no-article-box">
+//         <div class="remaining-summary">
+//           <span class="message-eyebrow">Liste d'épicerie</span>
+//           <span class="message-title">Aucun article coché.</span>
+//           <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
+//         </div>
+//         <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//       </div>
+//     `;
+// 
+//     document.body.classList.add("no-article-modal");
+//     panel.classList.remove("has-fixed-message");
+//     panel.style.display = "block";
+//     return;
+//   }
+// 
+//   closeShareChoices();
+//   document.body.classList.remove("no-article-modal");
+// 
+//   const panel = document.getElementById("selectedPanel");
+//   const filteredTotal = countCheckedFilteredItems();
+// 
+//   let html = `<h2>Liste d'épicerie</h2>`;
+//   html += buildStoreFilterHtml("showSimpleGroceryList");
+//   html += `<div class="basket-summary simple-list-note">Format simple</div>`;
+// 
+//   if (filteredTotal === 0) {
+//     html += `<div class="store-filter-message">Aucun article coché pour cet endroit.</div>`;
+//   } else {
+//     html += `<div class="simple-grocery-list">`;
+// 
+//     data.forEach(cat => {
+//       const selected = cat.items
+//         .filter(i => i.checked && storeMatchesSelectedFilter(i))
+//         .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }));
+// 
+//       if (selected.length) {
+//         html += `<div class="simple-category">`;
+//         html += `<h3>${escapeHtml(cat.name)}</h3>`;
+//         html += `<ul>`;
+// 
+//         selected.forEach(i => {
+//           html += `<li class="simple-line-row">
+//             <span class="simple-item-name">${escapeHtml(i.name)}</span>
+//             <span class="simple-item-qty">x${escapeHtml(String(i.quantity || 1))}</span>
+//             <span class="simple-item-store">${escapeHtml(getStoreLabelForFilter(i))}</span>
+//           </li>`;
+//         });
+// 
+//         html += `</ul></div>`;
+//       }
+//     });
+// 
+//     html += `</div>`;
+//   }
+// 
+//   html += `<div class="selected-actions">
+//     <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//   </div>`;
+// 
+//   panel.innerHTML = html;
+//   panel.classList.add("has-fixed-message");
+//   panel.style.display = "block";
+//   window.scrollTo({ top:0, behavior:"smooth" });
+// }
+// --- FIN DÉSACTIVÉ v2.0.28 ---
 </script>
 
 
@@ -9168,96 +9174,98 @@ showSimpleGroceryList()
 Liste d'épicerie simple avec mode : catégorie / alphabétique / où acheter.
 -------------------------------------------------------------------------------
 */
-function showSimpleGroceryList() {
-  const allItems = getCheckedItemsFlat();
-
-  if (allItems.length === 0) {
-    const panel = document.getElementById("selectedPanel");
-    if (!panel) return;
-
-    panel.innerHTML = `
-      <div class="no-article-box">
-        <div class="remaining-summary">
-          <span class="message-eyebrow">Liste d'épicerie</span>
-          <span class="message-title">Aucun article coché.</span>
-          <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
-        </div>
-        <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-      </div>
-    `;
-
-    document.body.classList.add("no-article-modal");
-    panel.classList.remove("has-fixed-message");
-    panel.style.display = "block";
-    return;
-  }
-
-  closeShareChoices();
-  document.body.classList.remove("no-article-modal");
-
-  const panel = document.getElementById("selectedPanel");
-  let html = `<h2>Liste d'épicerie</h2>`;
-  html += buildDisplayModeHtml("showSimpleGroceryList");
-  html += `<div class="basket-summary simple-list-note">Format simple</div>`;
-
-  if (selectedListDisplayMode === "categorie") {
-    html += `<div class="simple-grocery-list">`;
-    data.forEach(cat => {
-      const selected = cat.items
-        .filter(i => i.checked)
-        .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }))
-        .map(item => ({ cat, item, itemIndex: cat.items.indexOf(item) }));
-
-      if (selected.length) {
-        html += `<div class="simple-category">`;
-        html += `<h3>${escapeHtml(cat.name)}</h3>`;
-        html += renderSimpleListRows(selected);
-        html += `</div>`;
-      }
-    });
-    html += `</div>`;
-  }
-
-  if (selectedListDisplayMode === "alphabetique") {
-    html += `<div class="simple-grocery-list">`;
-    html += `<div class="simple-category">`;
-    html += `<h3>Alphabétique</h3>`;
-    html += renderSimpleListRows(sortFlatItemsAlphabetically(allItems.slice()));
-    html += `</div></div>`;
-  }
-
-  if (selectedListDisplayMode === "ouacheter") {
-    html += `<div class="simple-grocery-list">`;
-    const byStore = sortFlatItemsByStore(allItems.slice());
-    let currentStore = "";
-    byStore.forEach(entry => {
-      const store = getStoreLabelForFilter(entry.item);
-      if (store !== currentStore) {
-        if (currentStore !== "") html += `</div>`;
-        currentStore = store;
-        html += `<div class="simple-category">`;
-        html += `<h3>${escapeHtml(store)}</h3>`;
-        html += `<ul>`;
-      }
-
-      html += `<li class="simple-line-row">
-        <span class="simple-item-name">${escapeHtml(entry.item.name)}</span>
-        <span class="simple-item-qty">x${escapeHtml(String(entry.item.quantity || 1))}</span>
-        <span class="simple-item-store">${escapeHtml(entry.cat.name)}</span>
-      </li>`;
-    });
-    html += `</ul></div></div>`;
-  }
-
-  html += `<div class="selected-actions">
-    <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-  </div>`;
-
-  panel.innerHTML = html;
-  panel.classList.add("has-fixed-message");
-  panel.style.display = "block";
-  window.scrollTo({ top:0, behavior:"smooth" });
-}
+// --- DÉSACTIVÉ v2.0.28 : traitement Voir liste épicerie commenté ---
+// function showSimpleGroceryList() {
+//   const allItems = getCheckedItemsFlat();
+// 
+//   if (allItems.length === 0) {
+//     const panel = document.getElementById("selectedPanel");
+//     if (!panel) return;
+// 
+//     panel.innerHTML = `
+//       <div class="no-article-box">
+//         <div class="remaining-summary">
+//           <span class="message-eyebrow">Liste d'épicerie</span>
+//           <span class="message-title">Aucun article coché.</span>
+//           <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
+//         </div>
+//         <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//       </div>
+//     `;
+// 
+//     document.body.classList.add("no-article-modal");
+//     panel.classList.remove("has-fixed-message");
+//     panel.style.display = "block";
+//     return;
+//   }
+// 
+//   closeShareChoices();
+//   document.body.classList.remove("no-article-modal");
+// 
+//   const panel = document.getElementById("selectedPanel");
+//   let html = `<h2>Liste d'épicerie</h2>`;
+//   html += buildDisplayModeHtml("showSimpleGroceryList");
+//   html += `<div class="basket-summary simple-list-note">Format simple</div>`;
+// 
+//   if (selectedListDisplayMode === "categorie") {
+//     html += `<div class="simple-grocery-list">`;
+//     data.forEach(cat => {
+//       const selected = cat.items
+//         .filter(i => i.checked)
+//         .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }))
+//         .map(item => ({ cat, item, itemIndex: cat.items.indexOf(item) }));
+// 
+//       if (selected.length) {
+//         html += `<div class="simple-category">`;
+//         html += `<h3>${escapeHtml(cat.name)}</h3>`;
+//         html += renderSimpleListRows(selected);
+//         html += `</div>`;
+//       }
+//     });
+//     html += `</div>`;
+//   }
+// 
+//   if (selectedListDisplayMode === "alphabetique") {
+//     html += `<div class="simple-grocery-list">`;
+//     html += `<div class="simple-category">`;
+//     html += `<h3>Alphabétique</h3>`;
+//     html += renderSimpleListRows(sortFlatItemsAlphabetically(allItems.slice()));
+//     html += `</div></div>`;
+//   }
+// 
+//   if (selectedListDisplayMode === "ouacheter") {
+//     html += `<div class="simple-grocery-list">`;
+//     const byStore = sortFlatItemsByStore(allItems.slice());
+//     let currentStore = "";
+//     byStore.forEach(entry => {
+//       const store = getStoreLabelForFilter(entry.item);
+//       if (store !== currentStore) {
+//         if (currentStore !== "") html += `</div>`;
+//         currentStore = store;
+//         html += `<div class="simple-category">`;
+//         html += `<h3>${escapeHtml(store)}</h3>`;
+//         html += `<ul>`;
+//       }
+// 
+//       html += `<li class="simple-line-row">
+//         <span class="simple-item-name">${escapeHtml(entry.item.name)}</span>
+//         <span class="simple-item-qty">x${escapeHtml(String(entry.item.quantity || 1))}</span>
+//         <span class="simple-item-store">${escapeHtml(entry.cat.name)}</span>
+//       </li>`;
+//     });
+//     html += `</ul></div></div>`;
+//   }
+// 
+//   html += `<div class="selected-actions">
+//     <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//   </div>`;
+// 
+//   panel.innerHTML = html;
+//   panel.classList.add("has-fixed-message");
+//   panel.style.display = "block";
+//   window.scrollTo({ top:0, behavior:"smooth" });
+// }
+// --- FIN DÉSACTIVÉ v2.0.28 ---
 </script>
 
 
@@ -9572,96 +9580,98 @@ function showSelected() {
   window.scrollTo({ top:0, behavior:"smooth" });
 }
 
-function showSimpleGroceryList() {
-  const allItems = getCheckedItemsFlat();
-  const panel = document.getElementById("selectedPanel");
-
-  if (allItems.length === 0) {
-    if (!panel) return;
-
-    panel.innerHTML = `
-      <div class="no-article-box">
-        <div class="remaining-summary">
-          <span class="message-eyebrow">Liste d'épicerie</span>
-          <span class="message-title">Aucun article coché.</span>
-          <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
-        </div>
-        <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-      </div>
-    `;
-
-    document.body.classList.add("no-article-modal");
-    panel.classList.remove("has-fixed-message");
-    panel.style.display = "block";
-    return;
-  }
-
-  const visibleItems = allItems.filter(whereBuySelected);
-
-  closeShareChoices();
-  document.body.classList.remove("no-article-modal");
-
-  let html = `<h2>Liste d'épicerie</h2>`;
-  html += buildDisplayModeHtml("showSimpleGroceryList");
-  html += `<div class="basket-summary simple-list-note">Format simple</div>`;
-
-  if (visibleItems.length === 0) {
-    html += `<div class="store-filter-message">Aucun article pour les endroits sélectionnés.</div>`;
-  } else if (selectedListDisplayMode === "categorie") {
-    html += `<div class="simple-grocery-list">`;
-    data.forEach(cat => {
-      const selected = cat.items
-        .filter(i => i.checked)
-        .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }))
-        .map(item => ({ cat, item, itemIndex: cat.items.indexOf(item) }));
-
-      if (selected.length) {
-        html += `<div class="simple-category">`;
-        html += `<h3>${escapeHtml(cat.name)}</h3>`;
-        html += renderSimpleListRows(selected);
-        html += `</div>`;
-      }
-    });
-    html += `</div>`;
-  } else if (selectedListDisplayMode === "alphabetique") {
-    html += `<div class="simple-grocery-list"><div class="simple-category">`;
-    html += `<h3>Alphabétique</h3>`;
-    html += renderSimpleListRows(sortFlatItemsAlphabetically(allItems.slice()));
-    html += `</div></div>`;
-  } else if (selectedListDisplayMode === "ouacheter") {
-    html += `<div class="simple-grocery-list">`;
-    const byStore = sortFlatItemsByStore(visibleItems.slice());
-    let currentStore = "";
-
-    byStore.forEach(entry => {
-      const store = getStoreLabelForFilter(entry.item);
-      if (store !== currentStore) {
-        if (currentStore !== "") html += `</ul></div>`;
-        currentStore = store;
-        html += `<div class="simple-category">`;
-        html += `<h3>${escapeHtml(store)}</h3>`;
-        html += `<ul>`;
-      }
-
-      html += `<li class="simple-line-row">
-        <span class="simple-item-name">${escapeHtml(entry.item.name)}</span>
-        <span class="simple-item-qty">x${escapeHtml(String(entry.item.quantity || 1))}</span>
-        <span class="simple-item-store">${escapeHtml(entry.cat.name)}</span>
-      </li>`;
-    });
-
-    html += `</ul></div></div>`;
-  }
-
-  html += `<div class="selected-actions">
-    <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
-  </div>`;
-
-  panel.innerHTML = html;
-  panel.classList.add("has-fixed-message");
-  panel.style.display = "block";
-  window.scrollTo({ top:0, behavior:"smooth" });
-}
+// --- DÉSACTIVÉ v2.0.28 : traitement Voir liste épicerie commenté ---
+// function showSimpleGroceryList() {
+//   const allItems = getCheckedItemsFlat();
+//   const panel = document.getElementById("selectedPanel");
+// 
+//   if (allItems.length === 0) {
+//     if (!panel) return;
+// 
+//     panel.innerHTML = `
+//       <div class="no-article-box">
+//         <div class="remaining-summary">
+//           <span class="message-eyebrow">Liste d'épicerie</span>
+//           <span class="message-title">Aucun article coché.</span>
+//           <span class="message-subtitle">Cochez au moins un article pour afficher votre liste d'épicerie.</span>
+//         </div>
+//         <button type="button" class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//       </div>
+//     `;
+// 
+//     document.body.classList.add("no-article-modal");
+//     panel.classList.remove("has-fixed-message");
+//     panel.style.display = "block";
+//     return;
+//   }
+// 
+//   const visibleItems = allItems.filter(whereBuySelected);
+// 
+//   closeShareChoices();
+//   document.body.classList.remove("no-article-modal");
+// 
+//   let html = `<h2>Liste d'épicerie</h2>`;
+//   html += buildDisplayModeHtml("showSimpleGroceryList");
+//   html += `<div class="basket-summary simple-list-note">Format simple</div>`;
+// 
+//   if (visibleItems.length === 0) {
+//     html += `<div class="store-filter-message">Aucun article pour les endroits sélectionnés.</div>`;
+//   } else if (selectedListDisplayMode === "categorie") {
+//     html += `<div class="simple-grocery-list">`;
+//     data.forEach(cat => {
+//       const selected = cat.items
+//         .filter(i => i.checked)
+//         .sort((a,b) => a.name.localeCompare(b.name, "fr", { sensitivity:"base" }))
+//         .map(item => ({ cat, item, itemIndex: cat.items.indexOf(item) }));
+// 
+//       if (selected.length) {
+//         html += `<div class="simple-category">`;
+//         html += `<h3>${escapeHtml(cat.name)}</h3>`;
+//         html += renderSimpleListRows(selected);
+//         html += `</div>`;
+//       }
+//     });
+//     html += `</div>`;
+//   } else if (selectedListDisplayMode === "alphabetique") {
+//     html += `<div class="simple-grocery-list"><div class="simple-category">`;
+//     html += `<h3>Alphabétique</h3>`;
+//     html += renderSimpleListRows(sortFlatItemsAlphabetically(allItems.slice()));
+//     html += `</div></div>`;
+//   } else if (selectedListDisplayMode === "ouacheter") {
+//     html += `<div class="simple-grocery-list">`;
+//     const byStore = sortFlatItemsByStore(visibleItems.slice());
+//     let currentStore = "";
+// 
+//     byStore.forEach(entry => {
+//       const store = getStoreLabelForFilter(entry.item);
+//       if (store !== currentStore) {
+//         if (currentStore !== "") html += `</ul></div>`;
+//         currentStore = store;
+//         html += `<div class="simple-category">`;
+//         html += `<h3>${escapeHtml(store)}</h3>`;
+//         html += `<ul>`;
+//       }
+// 
+//       html += `<li class="simple-line-row">
+//         <span class="simple-item-name">${escapeHtml(entry.item.name)}</span>
+//         <span class="simple-item-qty">x${escapeHtml(String(entry.item.quantity || 1))}</span>
+//         <span class="simple-item-store">${escapeHtml(entry.cat.name)}</span>
+//       </li>`;
+//     });
+// 
+//     html += `</ul></div></div>`;
+//   }
+// 
+//   html += `<div class="selected-actions">
+//     <button class="secondary selected-close-full" onclick="closeArticlesCheckedPanel()">Fermer</button>
+//   </div>`;
+// 
+//   panel.innerHTML = html;
+//   panel.classList.add("has-fixed-message");
+//   panel.style.display = "block";
+//   window.scrollTo({ top:0, behavior:"smooth" });
+// }
+// --- FIN DÉSACTIVÉ v2.0.28 ---
 </script>
 
 
@@ -10322,7 +10332,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.27";
+const APP_VERSION = "2.0.28";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10544,15 +10554,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v35";
-const APP_CACHE_NAME = "ma-liste-epicerie-v35";
+const APP_CACHE_VERSION = "v36";
+const APP_CACHE_NAME = "ma-liste-epicerie-v36";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.27");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.28");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10604,8 +10614,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.27</div>
-        <div class="version-visible-small">Cache : v35</div>
+        <div class="version-visible-number">version 2.0.28</div>
+        <div class="version-visible-small">Cache : v36</div>
       </div>
     </div>
   `;
