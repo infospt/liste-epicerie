@@ -6488,8 +6488,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.60</div>
-            <div class="version-visible-small">Cache : v68</div>
+            <div class="version-visible-number">version 2.0.61</div>
+            <div class="version-visible-small">Cache : v69</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10613,7 +10613,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.60";
+const APP_VERSION = "2.0.61";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10835,15 +10835,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v68";
-const APP_CACHE_NAME = "ma-liste-epicerie-v68";
+const APP_CACHE_VERSION = "v69";
+const APP_CACHE_NAME = "ma-liste-epicerie-v69";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.60");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.61");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10895,8 +10895,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.60</div>
-        <div class="version-visible-small">Cache : v68</div>
+        <div class="version-visible-number">version 2.0.61</div>
+        <div class="version-visible-small">Cache : v69</div>
       </div>
     </div>
   `;
@@ -11614,6 +11614,28 @@ body:not(.home-mode) .app-logo {
     max-height:none !important;
   }
 }
+
+
+/* v2.0.61 - Paramètres : permettre de remonter jusqu'en haut */
+body.settings-open {
+  overflow:hidden !important;
+}
+body.settings-open .settings-overlay {
+  position:fixed !important;
+  inset:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain !important;
+  padding-top:max(16px, env(safe-area-inset-top)) !important;
+  padding-bottom:max(24px, env(safe-area-inset-bottom)) !important;
+}
+body.settings-open .settings-box {
+  margin-top:16px !important;
+  margin-bottom:24px !important;
+  max-height:none !important;
+}
+
 </style>
 <script>
 /* v2.0.58 - Bloque le pull-down dans les catégories sans changer le défilement normal */
@@ -11652,6 +11674,27 @@ body:not(.home-mode) .app-logo {
       event.preventDefault();
     }
   }, { passive:false });
+})();
+</script>
+
+
+
+<script>
+/* v2.0.61 - Paramètres : ouvrir en haut */
+(function(){
+  const previousOpenSettings = window.openSettings;
+  if (typeof previousOpenSettings === 'function') {
+    window.openSettings = function() {
+      const result = previousOpenSettings.apply(this, arguments);
+      setTimeout(function(){
+        const overlay = document.getElementById('settingsOverlay');
+        const box = overlay ? overlay.querySelector('.settings-box') : null;
+        if (overlay) overlay.scrollTop = 0;
+        if (box) box.scrollTop = 0;
+      }, 0);
+      return result;
+    };
+  }
 })();
 </script>
 
