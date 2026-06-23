@@ -5804,7 +5804,24 @@ body:not(.home-mode) #homePanel {
       line-height:1.2 !important;
     }
 
-</style>
+
+
+    /* v2.0.32 - Paramètres au-dessus de la barre du bas */
+    body.settings-open .bottom-bar {
+      display:none !important;
+    }
+    body.settings-open {
+      padding-bottom:0 !important;
+    }
+    body.settings-open .settings-overlay {
+      z-index:6000 !important;
+      padding-bottom:24px !important;
+    }
+    body.settings-open .settings-box {
+      margin-bottom:28px !important;
+    }
+
+  </style>
 
   <!--
   ============================================================================
@@ -6240,8 +6257,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.29</div>
-            <div class="version-visible-small">Cache : v37</div>
+            <div class="version-visible-number">version 2.0.32</div>
+            <div class="version-visible-small">Cache : v40</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10362,7 +10379,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.31";
+const APP_VERSION = "2.0.32";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10584,15 +10601,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v39";
-const APP_CACHE_NAME = "ma-liste-epicerie-v39";
+const APP_CACHE_VERSION = "v40";
+const APP_CACHE_NAME = "ma-liste-epicerie-v40";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.31");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.32");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10644,8 +10661,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.29</div>
-        <div class="version-visible-small">Cache : v37</div>
+        <div class="version-visible-number">version 2.0.32</div>
+        <div class="version-visible-small">Cache : v40</div>
       </div>
     </div>
   `;
@@ -10842,6 +10859,44 @@ body:not(.home-mode) .category:not(.collapsed) > .cat-title .chevron {
   border-color:#FFFFFF !important;
 }
 </style>
+
+
+<script>
+/* v2.0.32 - cacher la barre du bas pendant Paramètres */
+(function() {
+  function markSettingsOpen() {
+    document.body.classList.add('settings-open');
+  }
+  function markSettingsClosed() {
+    document.body.classList.remove('settings-open');
+  }
+
+  const previousOpenSettings = window.openSettings;
+  if (typeof previousOpenSettings === 'function') {
+    window.openSettings = function() {
+      const result = previousOpenSettings.apply(this, arguments);
+      markSettingsOpen();
+      return result;
+    };
+  }
+
+  const previousCloseSettings = window.closeSettings;
+  if (typeof previousCloseSettings === 'function') {
+    window.closeSettings = function() {
+      const result = previousCloseSettings.apply(this, arguments);
+      markSettingsClosed();
+      return result;
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('settingsOverlay');
+    if (overlay && overlay.style.display !== 'block') {
+      markSettingsClosed();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
