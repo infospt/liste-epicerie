@@ -6486,8 +6486,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.51</div>
-            <div class="version-visible-small">Cache : v59</div>
+            <div class="version-visible-number">version 2.0.52</div>
+            <div class="version-visible-small">Cache : v60</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -8350,6 +8350,7 @@ function showShareNeedsCheckedMessage() {
   `;
 
   document.body.classList.add("no-article-modal");
+  document.body.classList.add("share-filter-modal");
   panel.classList.remove("has-fixed-message");
   panel.style.display = "block";
 }
@@ -10610,7 +10611,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.51";
+const APP_VERSION = "2.0.52";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10832,15 +10833,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v59";
-const APP_CACHE_NAME = "ma-liste-epicerie-v59";
+const APP_CACHE_VERSION = "v60";
+const APP_CACHE_NAME = "ma-liste-epicerie-v60";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.51");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.52");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10892,8 +10893,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.51</div>
-        <div class="version-visible-small">Cache : v59</div>
+        <div class="version-visible-number">version 2.0.52</div>
+        <div class="version-visible-small">Cache : v60</div>
       </div>
     </div>
   `;
