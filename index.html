@@ -5212,6 +5212,44 @@ body:not(.home-mode) #homePanel {
       }
     }
 
+    /* ÉCLAT VISUEL DU PANNEAU PARTAGER */
+    .share-filter-panel {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.75), transparent 170px),
+        linear-gradient(180deg, #FFF8B8 0%, #FFD84C 48%, #F6B900 100%) !important;
+      border:2px solid #24A136 !important;
+      box-shadow:0 14px 34px rgba(36,161,54,.22), 0 8px 24px rgba(166,116,0,.20) !important;
+    }
+
+    .share-filter-panel h2 {
+      color:#0B4F24 !important;
+      text-align:center !important;
+      font-size:28px !important;
+      font-weight:900 !important;
+      letter-spacing:.3px;
+      text-shadow:0 2px 0 rgba(255,255,255,.65);
+    }
+
+    .share-filter-card {
+      background:linear-gradient(180deg, #FFFFFF 0%, #FFFDF0 100%) !important;
+      border:1px solid rgba(36,161,54,.28) !important;
+      box-shadow:0 8px 18px rgba(0,0,0,.08) !important;
+    }
+
+    .share-filter-panel .remaining-summary {
+      background:linear-gradient(135deg, #178A35, #2FB442) !important;
+      color:#FFFFFF !important;
+      border:0 !important;
+      box-shadow:0 8px 18px rgba(23,138,53,.25) !important;
+      text-shadow:0 1px 1px rgba(0,0,0,.18);
+    }
+
+    .share-filter-actions button {
+      min-height:52px;
+      font-size:17px !important;
+      font-weight:900 !important;
+    }
+
 
     /*
     ---------------------------------------------------------------------------
@@ -6419,8 +6457,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.39</div>
-            <div class="version-visible-small">Cache : v47</div>
+            <div class="version-visible-number">version 2.0.40</div>
+            <div class="version-visible-small">Cache : v48</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10537,7 +10575,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.39";
+const APP_VERSION = "2.0.40";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10759,15 +10797,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v47";
-const APP_CACHE_NAME = "ma-liste-epicerie-v47";
+const APP_CACHE_VERSION = "v48";
+const APP_CACHE_NAME = "ma-liste-epicerie-v48";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.39");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.40");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10819,8 +10857,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.39</div>
-        <div class="version-visible-small">Cache : v47</div>
+        <div class="version-visible-number">version 2.0.40</div>
+        <div class="version-visible-small">Cache : v48</div>
       </div>
     </div>
   `;
