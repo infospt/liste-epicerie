@@ -5774,7 +5774,28 @@ body:not(.home-mode) #homePanel {
       }
     }
 
-  </style>
+  
+
+    /* v2.0.30 - Boutons du bas plus hauts pour clic au doigt */
+    body:not(.home-mode) {
+      padding-bottom:125px !important;
+    }
+    body:not(.home-mode) .bottom-bar {
+      padding:13px 12px calc(13px + env(safe-area-inset-bottom, 0px)) !important;
+      gap:8px !important;
+    }
+    body:not(.home-mode) .bottom-bar button {
+      min-height:58px !important;
+      padding:16px 5px !important;
+      font-size:13px !important;
+      line-height:1.15 !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      text-align:center !important;
+    }
+
+</style>
 
   <!--
   ============================================================================
@@ -10332,7 +10353,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.29";
+const APP_VERSION = "2.0.30";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10554,7 +10575,7 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v37";
+const APP_CACHE_VERSION = "v38";
 const APP_CACHE_NAME = "ma-liste-epicerie-v37";
 
 async function updateSettingsVersionInfo() {
@@ -10562,7 +10583,7 @@ async function updateSettingsVersionInfo() {
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.29");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.30");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
