@@ -6099,6 +6099,28 @@ body.home-mode .hero-poster-image {
 
 </style>
 
+
+<style>
+/* v2.0.38 - Paramètres : vert exact pour Assigner un prénom aux articles existants */
+#assignCollapseHeader.collapsed,
+#assignCollapseHeader.collapsed span {
+  color:#1D7F43 !important;
+}
+#assignCollapseHeader.collapsed .arrow {
+  color:#1D7F43 !important;
+}
+#assignCollapseHeader:not(.collapsed),
+#assignCollapseHeader:not(.collapsed) span {
+  background:#1D7F43 !important;
+  color:#FFFFFF !important;
+  border-color:#1D7F43 !important;
+}
+#assignCollapseHeader:not(.collapsed) .arrow {
+  background:rgba(255,255,255,.18) !important;
+  color:#FFFFFF !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+</style>
 </head>
 <body class="home-mode">
   <!--
@@ -6398,8 +6420,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.37</div>
-            <div class="version-visible-small">Cache : v45</div>
+            <div class="version-visible-number">version 2.0.38</div>
+            <div class="version-visible-small">Cache : v46</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10525,7 +10547,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.37";
+const APP_VERSION = "2.0.38";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10747,15 +10769,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v45";
-const APP_CACHE_NAME = "ma-liste-epicerie-v45";
+const APP_CACHE_VERSION = "v46";
+const APP_CACHE_NAME = "ma-liste-epicerie-v46";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.37");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.38");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10807,8 +10829,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.37</div>
-        <div class="version-visible-small">Cache : v45</div>
+        <div class="version-visible-number">version 2.0.38</div>
+        <div class="version-visible-small">Cache : v46</div>
       </div>
     </div>
   `;
