@@ -6486,8 +6486,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.55</div>
-            <div class="version-visible-small">Cache : v63</div>
+            <div class="version-visible-number">version 2.0.56</div>
+            <div class="version-visible-small">Cache : v64</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10611,7 +10611,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.55";
+const APP_VERSION = "2.0.56";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10833,15 +10833,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v63";
-const APP_CACHE_NAME = "ma-liste-epicerie-v63";
+const APP_CACHE_VERSION = "v64";
+const APP_CACHE_NAME = "ma-liste-epicerie-v64";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.55");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.56");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10893,8 +10893,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.55</div>
-        <div class="version-visible-small">Cache : v63</div>
+        <div class="version-visible-number">version 2.0.56</div>
+        <div class="version-visible-small">Cache : v64</div>
       </div>
     </div>
   `;
@@ -11573,6 +11573,54 @@ body.no-article-modal.share-filter-modal #selectedPanel {
   }
 }
 </style>
+
+
+
+<style>
+/* v2.0.56 - Catégories : empêcher le glissement de revenir à l'accueil */
+body:not(.home-mode) {
+  overscroll-behavior-y:none !important;
+}
+</style>
+<script>
+/* v2.0.56 - Bloque le pull-down dans les catégories sans changer le défilement normal */
+(function(){
+  let startY = 0;
+
+  function categoryModeActive() {
+    return !document.body.classList.contains('home-mode') &&
+           !document.body.classList.contains('articles-checked-modal') &&
+           !document.body.classList.contains('share-filter-modal') &&
+           !document.body.classList.contains('no-article-modal');
+  }
+
+  document.addEventListener('touchstart', function(event) {
+    if (!categoryModeActive()) return;
+    if (!event.touches || !event.touches.length) return;
+    startY = event.touches[0].clientY;
+  }, { passive:true });
+
+  document.addEventListener('touchmove', function(event) {
+    if (!categoryModeActive()) return;
+    if (!event.touches || !event.touches.length) return;
+
+    const currentY = event.touches[0].clientY;
+    const movingDown = currentY > startY;
+    const movingUp = currentY < startY;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+    if (movingDown && scrollTop <= 0) {
+      event.preventDefault();
+      return;
+    }
+
+    if (movingUp && scrollTop >= maxScroll - 1) {
+      event.preventDefault();
+    }
+  }, { passive:false });
+})();
+</script>
 
 </body>
 </html>
