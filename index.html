@@ -5777,6 +5777,7 @@ body:not(.home-mode) #homePanel {
   
 
     /* v2.0.30 - Boutons du bas plus hauts pour clic au doigt */
+    /* v2.0.31 - Bouton Fermer Articles panier plus lisible */
     body:not(.home-mode) {
       padding-bottom:125px !important;
     }
@@ -5793,6 +5794,14 @@ body:not(.home-mode) #homePanel {
       align-items:center !important;
       justify-content:center !important;
       text-align:center !important;
+    }
+
+
+
+    /* v2.0.31 - Articles panier : bouton Fermer plus lisible */
+    #selectedPanel .selected-actions .selected-close-full {
+      font-size:18px !important;
+      line-height:1.2 !important;
     }
 
 </style>
@@ -10353,7 +10362,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.30";
+const APP_VERSION = "2.0.31";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10575,15 +10584,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v38";
-const APP_CACHE_NAME = "ma-liste-epicerie-v37";
+const APP_CACHE_VERSION = "v39";
+const APP_CACHE_NAME = "ma-liste-epicerie-v39";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.30");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.31");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
