@@ -6488,8 +6488,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.67</div>
-            <div class="version-visible-small">Cache : v75</div>
+            <div class="version-visible-number">version 2.0.68</div>
+            <div class="version-visible-small">Cache : v76</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10613,7 +10613,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.67";
+const APP_VERSION = "2.0.68";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10835,15 +10835,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v75";
-const APP_CACHE_NAME = "ma-liste-epicerie-v75";
+const APP_CACHE_VERSION = "v76";
+const APP_CACHE_NAME = "ma-liste-epicerie-v76";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.67");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.68");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10895,8 +10895,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.67</div>
-        <div class="version-visible-small">Cache : v75</div>
+        <div class="version-visible-number">version 2.0.68</div>
+        <div class="version-visible-small">Cache : v76</div>
       </div>
     </div>
   `;
@@ -12075,6 +12075,68 @@ body:not(.home-mode) .app-logo {
     width:140px !important;
     max-width:48vw !important;
     max-height:52px !important;
+  }
+}
+</style>
+
+
+
+<style>
+/* v2.0.68 - Réduire seulement l'entête de la page secondaire */
+body:not(.home-mode) header {
+  min-height:58px !important;
+  max-height:66px !important;
+  padding:4px 10px 3px !important;
+  gap:3px !important;
+  overflow:visible !important;
+}
+body:not(.home-mode) .app-logo-wrap {
+  min-height:42px !important;
+  height:42px !important;
+  max-height:42px !important;
+  padding:0 6px !important;
+  margin:0 auto !important;
+}
+body:not(.home-mode) .app-logo {
+  width:128px !important;
+  max-width:44vw !important;
+  max-height:42px !important;
+  height:auto !important;
+}
+body:not(.home-mode) .header-stats {
+  gap:4px !important;
+  margin:0 !important;
+}
+body:not(.home-mode) .header-stat {
+  padding:2px 6px !important;
+  min-height:18px !important;
+}
+body:not(.home-mode) .header-stat strong {
+  font-size:12px !important;
+  line-height:1 !important;
+}
+body:not(.home-mode) .header-stat span {
+  font-size:8px !important;
+  line-height:1 !important;
+}
+@media (max-width:719px) {
+  :root {
+    --mobile-header-height:66px !important;
+  }
+  body:not(.home-mode) header {
+    min-height:56px !important;
+    max-height:64px !important;
+    padding:3px 8px 3px !important;
+  }
+  body:not(.home-mode) .app-logo-wrap {
+    min-height:40px !important;
+    height:40px !important;
+    max-height:40px !important;
+  }
+  body:not(.home-mode) .app-logo {
+    width:120px !important;
+    max-width:42vw !important;
+    max-height:40px !important;
   }
 }
 </style>
