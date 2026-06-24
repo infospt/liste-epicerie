@@ -6497,8 +6497,8 @@ body.home-mode .hero-poster-image {
           <button type="button" class="secondary install-app-button" onclick="showInstallHelp()">Installer l'application</button>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.75</div>
-            <div class="version-visible-small">Cache : v83</div>
+            <div class="version-visible-number">version 2.0.76</div>
+            <div class="version-visible-small">Cache : v84</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10624,7 +10624,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.75";
+const APP_VERSION = "2.0.76";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10846,15 +10846,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v83";
-const APP_CACHE_NAME = "ma-liste-epicerie-v83";
+const APP_CACHE_VERSION = "v84";
+const APP_CACHE_NAME = "ma-liste-epicerie-v84";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.75");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.76");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10906,8 +10906,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.75</div>
-        <div class="version-visible-small">Cache : v83</div>
+        <div class="version-visible-number">version 2.0.76</div>
+        <div class="version-visible-small">Cache : v84</div>
       </div>
     </div>
   `;
@@ -12291,35 +12291,39 @@ body.settings-open #settingsOverlay .settings-box {
 
 
 <style>
-/* v2.0.75 - Thèmes de couleur */
+/* v2.0.76 - Thème bleu + orange pâle */
 body[data-app-theme="blue"] {
-  --blue:#1d63b7;
-  --dark:#12345f;
-  --light:#eef6ff;
-  --border:#b8cee8;
-  --bg:#eef6ff;
-  --green:#1668c7;
-  background:linear-gradient(180deg, #eaf4ff 0%, #f7fbff 260px, #eef6ff 100%) !important;
+  --blue:#2563EB;
+  --dark:#1E3A8A;
+  --light:#EFF6FF;
+  --border:#BFDBFE;
+  --bg:#EFF6FF;
+  --green:#2563EB;
+  background:linear-gradient(180deg, #EFF6FF 0%, #ffffff 260px, #EFF6FF 100%) !important;
 }
 body[data-app-theme="blue"] header {
-  background:linear-gradient(180deg, #d7ecff 0%, #9cccf7 48%, #5ea6e8 100%) !important;
-  border-bottom-color:#3f8bd5 !important;
+  background:linear-gradient(180deg, #DBEAFE 0%, #93C5FD 48%, #2563EB 100%) !important;
+  border-bottom-color:#1E3A8A !important;
 }
-body[data-app-theme="blue"] .subtitle { color:#244f7a !important; }
+body[data-app-theme="blue"] .subtitle { color:#1E3A8A !important; }
 body[data-app-theme="blue"] .category-header,
 body[data-app-theme="blue"] button.primary,
 body[data-app-theme="blue"] .alpha-bar button.active {
-  background:#1d63b7 !important;
-  border-color:#1d63b7 !important;
+  background:#2563EB !important;
+  border-color:#1E3A8A !important;
   color:#fff !important;
 }
 body[data-app-theme="blue"] .settings-section {
-  background:#f2f8ff !important;
-  border-color:#b8cee8 !important;
+  background:#EFF6FF !important;
+  border-color:#FDBA74 !important;
 }
 body[data-app-theme="blue"] .settings-section h3,
 body[data-app-theme="blue"] .settings-collapse-header span:first-child {
-  color:#1d63b7 !important;
+  color:#1E3A8A !important;
+}
+body[data-app-theme="blue"] .settings-section button:not(.primary),
+body[data-app-theme="blue"] .settings-box button:not(.primary) {
+  border-color:#FDBA74 !important;
 }
 </style>
 <script>
