@@ -6445,7 +6445,7 @@ body.home-mode .hero-poster-image {
           <option value="camping">Liste camping</option>
           <option value="school">Liste scolaire</option>
         </select>
-        <div class="settings-note">Essai : ce choix modifie le nom du type de liste sans changer les articles existants.</div>
+        <div class="settings-note">Ce choix affiche les articles courants du type de liste sélectionné.</div>
       </div>
 
       <div class="settings-section">
@@ -6514,8 +6514,8 @@ body.home-mode .hero-poster-image {
           <button type="button" class="secondary install-app-button" onclick="showInstallHelp()">Installer l'application</button>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.78</div>
-            <div class="version-visible-small">Cache : v86</div>
+            <div class="version-visible-number">version 2.0.79</div>
+            <div class="version-visible-small">Cache : v87</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10641,7 +10641,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.78";
+const APP_VERSION = "2.0.79";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10778,7 +10778,7 @@ function showUpdateResultMessage(status, requestedVersion) {
 
   if (!overlay || !icon || !title || !text || !versions) return;
 
-  const current = typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.78";
+  const current = typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.79";
 
   if (status === "success") {
     icon.className = "success";
@@ -10809,7 +10809,7 @@ function checkUpdateResultAfterReload() {
 
   sessionStorage.removeItem("afficher_resultat_maj");
 
-  const current = typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.78";
+  const current = typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.79";
   const status = compareAppVersions(current, requestedVersion) >= 0 ? "success" : "failed";
 
   setTimeout(() => {
@@ -10863,15 +10863,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v86";
-const APP_CACHE_NAME = "ma-liste-epicerie-v86";
+const APP_CACHE_VERSION = "v87";
+const APP_CACHE_NAME = "ma-liste-epicerie-v87";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.78");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.79");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10923,8 +10923,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.78</div>
-        <div class="version-visible-small">Cache : v86</div>
+        <div class="version-visible-number">version 2.0.79</div>
+        <div class="version-visible-small">Cache : v87</div>
       </div>
     </div>
   `;
@@ -12568,6 +12568,189 @@ body.app-theme-blue .list-type-badge {
     window.openSettings = function(){
       const result = previousOpenSettings.apply(this, arguments);
       refreshListType();
+      return result;
+    };
+  }
+})();
+</script>
+
+
+<script>
+/* v2.0.79 - Articles courants par type de liste */
+(function(){
+  const LIST_TYPE_KEY_V79 = "ma_liste_courses_type";
+  const STORAGE_KEY_BASE_V79 = "liste_epicerie_mobile_v3_panier";
+  const TYPE_LABELS_V79 = {
+    grocery: "Liste d'épicerie",
+    hardware: "Liste de quincaillerie",
+    materials: "Liste de matériaux",
+    pharmacy: "Liste de pharmacie",
+    home: "Liste maison / entretien",
+    auto: "Liste auto",
+    garden: "Liste jardinage",
+    camping: "Liste camping",
+    school: "Liste scolaire"
+  };
+  const LIST_TYPE_DATA_V79 = {
+    hardware: [
+      { name: "Visserie & fixations", items: ["Vis à bois", "Vis à gypse", "Clous", "Ancrages muraux", "Boulons", "Écrous", "Rondelles", "Crochets", "Attaches autobloquantes"] },
+      { name: "Outils manuels", items: ["Marteau", "Tournevis plat", "Tournevis étoile", "Pince", "Clé ajustable", "Ruban à mesurer", "Niveau", "Couteau utilitaire"] },
+      { name: "Peinture & finition", items: ["Pinceaux", "Rouleaux", "Bac à peinture", "Ruban à peintre", "Papier sablé", "Apprêt", "Peinture", "Pâte à bois"] },
+      { name: "Électricité", items: ["Ampoules", "Piles", "Rallonge électrique", "Ruban électrique", "Prise murale", "Interrupteur", "Plaque murale", "Détecteur de fumée"] },
+      { name: "Plomberie", items: ["Ruban téflon", "Rondelles de robinet", "Tuyau flexible", "Collets de serrage", "Déboucheur", "Siphon", "Silicone salle de bain", "Joint d'étanchéité"] }
+    ],
+    materials: [
+      { name: "Bois", items: ["2x4", "2x6", "Contreplaqué", "OSB", "MDF", "Planches", "Moulures", "Lattes"] },
+      { name: "Construction", items: ["Gypse", "Composé à joints", "Ruban à joints", "Isolant", "Pare-vapeur", "Membrane", "Ciment", "Béton prémélangé"] },
+      { name: "Revêtements", items: ["Plancher flottant", "Céramique", "Coulis", "Adhésif à céramique", "Sous-couche", "Plinthes", "Vinyle", "Calfeutrage"] },
+      { name: "Quincaillerie de chantier", items: ["Équerres", "Connecteurs", "Sabots de solive", "Vis structurales", "Clous de finition", "Agrafes", "Colle construction", "Mousse isolante"] },
+      { name: "Sécurité", items: ["Gants de travail", "Lunettes de sécurité", "Masques", "Bouchons d'oreilles", "Casque", "Genouillères", "Bâches", "Ruban de sécurité"] }
+    ],
+    pharmacy: [
+      { name: "Médicaments courants", items: ["Acétaminophène", "Ibuprofène", "Sirop pour la toux", "Pastilles", "Décongestionnant", "Antihistaminique", "Anti-nausée", "Thermomètre"] },
+      { name: "Premiers soins", items: ["Pansements", "Gazes", "Ruban médical", "Désinfectant", "Onguent antibiotique", "Compresses", "Ciseaux", "Pince à écharde"] },
+      { name: "Hygiène", items: ["Pâte à dents", "Brosse à dents", "Soie dentaire", "Rince-bouche", "Savon", "Shampoing", "Déodorant", "Cotons-tiges"] },
+      { name: "Soins personnels", items: ["Crème hydratante", "Baume à lèvres", "Crème solaire", "Rasoirs", "Mousse à raser", "Démaquillant", "Tampons", "Serviettes hygiéniques"] },
+      { name: "Bébé & enfants", items: ["Couches", "Lingettes", "Crème pour bébé", "Acétaminophène enfants", "Ibuprofène enfants", "Solution saline", "Thermomètre bébé", "Savon bébé"] }
+    ],
+    home: [
+      { name: "Nettoyage", items: ["Nettoyant tout usage", "Désinfectant", "Savon à vaisselle", "Éponges", "Lingettes", "Sacs poubelle", "Essuie-tout", "Nettoyant vitres"] },
+      { name: "Lessive", items: ["Détergent à lessive", "Assouplissant", "Détachant", "Feuilles assouplissantes", "Javellisant", "Panier à linge", "Pinces à linge", "Séchoir"] },
+      { name: "Cuisine", items: ["Papier aluminium", "Pellicule plastique", "Sacs congélation", "Filtres à café", "Serviettes de table", "Sacs compost", "Éponges à récurer", "Nettoyant four"] },
+      { name: "Entretien maison", items: ["Filtres de fournaise", "Ampoules", "Piles", "Ruban adhésif", "Colle", "Lubrifiant", "Calfeutrage", "Chiffons"] },
+      { name: "Salle de bain", items: ["Papier toilette", "Nettoyant toilette", "Nettoyant douche", "Savon à mains", "Rideau de douche", "Brosse toilette", "Désodorisant", "Déboucheur"] }
+    ],
+    auto: [
+      { name: "Entretien auto", items: ["Huile moteur", "Liquide lave-glace", "Liquide de refroidissement", "Liquide frein", "Filtres", "Essuie-glaces", "Cire auto", "Nettoyant intérieur"] },
+      { name: "Accessoires", items: ["Chargeur USB", "Support téléphone", "Câbles de démarrage", "Compresseur portatif", "Grattoir", "Brosse à neige", "Tapis d'auto", "Pare-soleil"] },
+      { name: "Urgence", items: ["Trousse de premiers soins", "Lampe de poche", "Piles", "Couverture", "Gants", "Triangle de sécurité", "Sangle de remorquage", "Pelle pliante"] },
+      { name: "Nettoyage", items: ["Savon auto", "Éponge", "Chiffons microfibres", "Nettoyant vitres", "Nettoyant jantes", "Brosse", "Seau", "Dégraissant"] },
+      { name: "Pneus", items: ["Jauge à pression", "Bouchons de valve", "Nettoyant pneus", "Clé en croix", "Cric", "Sac à pneus", "Gants", "Manomètre"] }
+    ],
+    garden: [
+      { name: "Terre & fertilisants", items: ["Terre à jardin", "Terreau", "Compost", "Paillis", "Engrais", "Chaux", "Mousse de tourbe", "Semences gazon"] },
+      { name: "Outils de jardin", items: ["Pelle", "Râteau", "Sécateur", "Truelle", "Gants de jardin", "Arrosoir", "Boyau", "Buse d'arrosage"] },
+      { name: "Plantes", items: ["Fleurs annuelles", "Vivaces", "Plants de tomates", "Fines herbes", "Arbustes", "Bulbes", "Graines", "Pots"] },
+      { name: "Entretien extérieur", items: ["Sacs de jardin", "Désherbant", "Anti-insectes", "Filet de protection", "Tuteurs", "Corde", "Bordures", "Toile géotextile"] },
+      { name: "BBQ & patio", items: ["Charbon", "Propane", "Allume-feu", "Brosse BBQ", "Housse BBQ", "Nettoyant patio", "Chaises", "Parasoleil"] }
+    ],
+    camping: [
+      { name: "Abri & sommeil", items: ["Tente", "Sac de couchage", "Matelas gonflable", "Oreiller", "Bâche", "Cordes", "Piquets", "Lampe de tente"] },
+      { name: "Cuisine camping", items: ["Réchaud", "Propane", "Glacière", "Ustensiles", "Assiettes", "Verres", "Casserole", "Ouvre-boîte"] },
+      { name: "Nourriture", items: ["Eau", "Café", "Collations", "Pain", "Beurre d'arachide", "Conserves", "Guimauves", "Barres tendres"] },
+      { name: "Sécurité", items: ["Trousse premiers soins", "Lampe de poche", "Piles", "Chasse-moustiques", "Crème solaire", "Sifflet", "Couteau", "Briquet"] },
+      { name: "Hygiène", items: ["Papier toilette", "Savon biodégradable", "Serviettes", "Lingettes", "Sacs poubelle", "Brosse à dents", "Dentifrice", "Désinfectant mains"] }
+    ],
+    school: [
+      { name: "Papeterie", items: ["Cahiers", "Feuilles mobiles", "Cartables", "Séparateurs", "Pochettes", "Agenda", "Duo-tangs", "Feuilles lignées"] },
+      { name: "Écriture", items: ["Crayons à mine", "Stylos bleus", "Stylos noirs", "Effaces", "Surligneurs", "Crayons de couleur", "Marqueurs", "Aiguisoir"] },
+      { name: "Matériel", items: ["Colle", "Ciseaux", "Règle", "Calculatrice", "Ruban adhésif", "Étui à crayons", "Clé USB", "Étiquettes"] },
+      { name: "Sac & lunch", items: ["Sac à dos", "Boîte à lunch", "Gourde", "Contenants", "Blocs réfrigérants", "Serviettes", "Collations", "Thermos"] },
+      { name: "Vêtements", items: ["Espadrilles", "Vêtements de sport", "Bas", "Mitaines", "Tuque", "Pantalon de pluie", "Bottes", "Étiquettes vêtements"] }
+    ]
+  };
+
+  function readTypeV79(){
+    try { return localStorage.getItem(LIST_TYPE_KEY_V79) || "grocery"; }
+    catch(e) { return "grocery"; }
+  }
+  function validTypeV79(type){ return TYPE_LABELS_V79[type] ? type : "grocery"; }
+  function keyForTypeV79(type){ return type === "grocery" ? STORAGE_KEY_BASE_V79 : STORAGE_KEY_BASE_V79 + "_" + type; }
+  function itemObjectV79(name){ return { name:name, checked:false, inBasket:false, quantity:1, person:"", store:"" }; }
+  function normalizeGenericV79(saved){
+    if (!Array.isArray(saved)) return [];
+    return saved.map(cat => ({
+      name: cat.name,
+      items: Array.isArray(cat.items) ? cat.items.map(item => ({
+        name: typeof item === "string" ? item : item.name,
+        checked: item.checked === true || item.checked === "true",
+        inBasket: item.inBasket === true || item.inBasket === "true",
+        quantity: Math.max(1, parseInt(item.quantity || item.qty || 1, 10) || 1),
+        person: item.person || "",
+        store: item.store || ""
+      })).filter(item => item.name) : []
+    })).filter(cat => cat.name);
+  }
+  function defaultDataForTypeV79(type){
+    if (type === "grocery") {
+      return filterDeletedItems(forcePharmacieCategory(DEFAULT_DATA.map(cat => ({
+        name: cat.name,
+        items: cat.items.map(itemObjectV79)
+      }))));
+    }
+    const source = LIST_TYPE_DATA_V79[type] || [];
+    return source.map(cat => ({ name: cat.name, items: cat.items.map(itemObjectV79) }));
+  }
+  function loadDataForTypeV79(type){
+    const selectedType = validTypeV79(type || readTypeV79());
+    const key = keyForTypeV79(selectedType);
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        if (selectedType === "grocery") return filterDeletedItems(forcePharmacieCategory(normalizeSavedData(JSON.parse(saved))));
+        return normalizeGenericV79(JSON.parse(saved));
+      }
+    } catch(e) {}
+    return defaultDataForTypeV79(selectedType);
+  }
+  function saveDataForTypeV79(){
+    try { localStorage.setItem(keyForTypeV79(validTypeV79(readTypeV79())), JSON.stringify(data)); }
+    catch(e) {}
+  }
+  function refreshInterfaceV79(){
+    if (typeof renderAlphaBar === "function") renderAlphaBar();
+    if (typeof renderSettingsAddCategoryOptions === "function") renderSettingsAddCategoryOptions();
+    if (typeof renderDuplicateCategoryOptions === "function") renderDuplicateCategoryOptions();
+    if (typeof renderAssignPersonSelect === "function") renderAssignPersonSelect();
+    if (typeof renderAssignArticleList === "function") renderAssignArticleList();
+    if (typeof renderDeleteArticleSettings === "function") renderDeleteArticleSettings();
+    if (typeof render === "function") render();
+    if (typeof updateDashboard === "function") updateDashboard();
+  }
+  function applyTypeBadgeV79(type){
+    const selectedType = validTypeV79(type || readTypeV79());
+    const label = TYPE_LABELS_V79[selectedType];
+    const select = document.getElementById("listTypeSelect");
+    const badge = document.getElementById("listTypeBadge");
+    if (select) select.value = selectedType;
+    if (badge) badge.textContent = label;
+    document.title = "Ma liste de courses";
+  }
+  function switchListTypeV79(type){
+    const selectedType = validTypeV79(type);
+    try { localStorage.setItem(LIST_TYPE_KEY_V79, selectedType); } catch(e) {}
+    data = loadDataForTypeV79(selectedType);
+    collapsedCategories = {};
+    data.forEach(cat => collapsedCategories[cat.name] = true);
+    if (typeof saveCollapsedCategories === "function") saveCollapsedCategories();
+    applyTypeBadgeV79(selectedType);
+    refreshInterfaceV79();
+  }
+
+  loadData = function(){ return loadDataForTypeV79(readTypeV79()); };
+  saveData = saveDataForTypeV79;
+  window.setListType = switchListTypeV79;
+  window.applyListType = function(type){ applyTypeBadgeV79(type); };
+  window.getListType = function(){ return validTypeV79(readTypeV79()); };
+
+  function initTypedListsV79(){
+    const currentType = validTypeV79(readTypeV79());
+    applyTypeBadgeV79(currentType);
+    data = loadDataForTypeV79(currentType);
+    refreshInterfaceV79();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTypedListsV79);
+  } else {
+    initTypedListsV79();
+  }
+
+  const previousOpenSettingsV79 = window.openSettings;
+  if (typeof previousOpenSettingsV79 === "function") {
+    window.openSettings = function(){
+      const result = previousOpenSettingsV79.apply(this, arguments);
+      applyTypeBadgeV79(readTypeV79());
       return result;
     };
   }
