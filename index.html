@@ -6488,8 +6488,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.64</div>
-            <div class="version-visible-small">Cache : v72</div>
+            <div class="version-visible-number">version 2.0.65</div>
+            <div class="version-visible-small">Cache : v73</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10613,7 +10613,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.64";
+const APP_VERSION = "2.0.65";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10835,15 +10835,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v72";
-const APP_CACHE_NAME = "ma-liste-epicerie-v72";
+const APP_CACHE_VERSION = "v73";
+const APP_CACHE_NAME = "ma-liste-epicerie-v73";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.64");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.65");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10895,8 +10895,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.64</div>
-        <div class="version-visible-small">Cache : v72</div>
+        <div class="version-visible-number">version 2.0.65</div>
+        <div class="version-visible-small">Cache : v73</div>
       </div>
     </div>
   `;
@@ -11896,6 +11896,88 @@ body.settings-open #settingsOverlay .settings-box {
       event.preventDefault();
     }
   }, {passive:false});
+})();
+</script>
+
+
+
+<style>
+/* v2.0.65 - Paramètres : fenêtre complète défilable, haut visible */
+body.settings-open {
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+}
+body.settings-open #settingsOverlay {
+  display:block !important;
+  position:fixed !important;
+  inset:0 !important;
+  z-index:6000 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain !important;
+  touch-action:pan-y !important;
+  padding:56px 12px 28px !important;
+  box-sizing:border-box !important;
+}
+body.settings-open #settingsOverlay .settings-box {
+  position:relative !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  width:min(100%, 560px) !important;
+  max-width:560px !important;
+  height:auto !important;
+  min-height:auto !important;
+  max-height:none !important;
+  margin:0 auto 24px !important;
+  overflow:visible !important;
+  transform:none !important;
+  box-sizing:border-box !important;
+}
+</style>
+<script>
+/* v2.0.65 - Paramètres : laisser défiler la fenêtre Paramètres seulement */
+(function(){
+  function settingsOpen(){
+    return document.body.classList.contains('settings-open');
+  }
+  function getOverlay(){
+    return document.getElementById('settingsOverlay');
+  }
+  function getBox(){
+    const overlay = getOverlay();
+    return overlay ? overlay.querySelector('.settings-box') : null;
+  }
+  function resetTop(){
+    const overlay = getOverlay();
+    if (!overlay) return;
+    overlay.scrollTop = 0;
+  }
+
+  const previousOpenSettings = window.openSettings;
+  if (typeof previousOpenSettings === 'function') {
+    window.openSettings = function(){
+      const result = previousOpenSettings.apply(this, arguments);
+      requestAnimationFrame(resetTop);
+      setTimeout(resetTop, 80);
+      setTimeout(resetTop, 250);
+      return result;
+    };
+  }
+
+  document.addEventListener('touchmove', function(event){
+    if (!settingsOpen()) return;
+    const box = getBox();
+    if (!box) return;
+    if (box.contains(event.target)) {
+      event.stopImmediatePropagation();
+      return;
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, {capture:true, passive:false});
 })();
 </script>
 
