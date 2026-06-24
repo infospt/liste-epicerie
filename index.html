@@ -6488,8 +6488,8 @@ body.home-mode .hero-poster-image {
           <div class="settings-note">Cette version sert à vérifier rapidement si le cellulaire affiche la bonne mise à jour.</div>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.68</div>
-            <div class="version-visible-small">Cache : v76</div>
+            <div class="version-visible-number">version 2.0.69</div>
+            <div class="version-visible-small">Cache : v77</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -10613,7 +10613,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.68";
+const APP_VERSION = "2.0.69";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10835,15 +10835,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v76";
-const APP_CACHE_NAME = "ma-liste-epicerie-v76";
+const APP_CACHE_VERSION = "v77";
+const APP_CACHE_NAME = "ma-liste-epicerie-v77";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.68");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.69");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10895,8 +10895,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.68</div>
-        <div class="version-visible-small">Cache : v76</div>
+        <div class="version-visible-number">version 2.0.69</div>
+        <div class="version-visible-small">Cache : v77</div>
       </div>
     </div>
   `;
@@ -12138,6 +12138,33 @@ body:not(.home-mode) .header-stat span {
     max-width:42vw !important;
     max-height:40px !important;
   }
+}
+</style>
+
+
+
+<style>
+/* v2.0.69 - Paramètres : réduire seulement les cadrages des catégories, sans changer les caractères */
+#settingsOverlay .settings-box > .settings-section {
+  padding:8px 10px !important;
+  margin:7px 0 !important;
+  border-radius:14px !important;
+}
+#settingsOverlay .settings-box > .settings-section > h3,
+#assignCollapseHeader {
+  padding:8px 12px !important;
+  min-height:auto !important;
+  line-height:1.15 !important;
+  margin:0 !important;
+  border-radius:14px !important;
+}
+#settingsOverlay .settings-section.settings-section-collapsed {
+  padding-top:6px !important;
+  padding-bottom:6px !important;
+}
+#settingsOverlay .settings-section.settings-auto-collapsible:not(.settings-section-collapsed) > h3,
+#assignCollapseHeader:not(.collapsed) {
+  padding:9px 12px !important;
 }
 </style>
 
