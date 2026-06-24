@@ -6424,6 +6424,14 @@ body.home-mode .hero-poster-image {
       </div>
 
       <div class="settings-section">
+        <h3>Thème de couleur</h3>
+        <select id="themeSelect" class="settings-select" onchange="setAppTheme(this.value)">
+          <option value="green-yellow">Vert / jaune actuel</option>
+          <option value="blue">Bleu</option>
+        </select>
+      </div>
+
+      <div class="settings-section">
         <h3>Ajouter ou gérer les endroits où acheter</h3>
         <div class="settings-note">Ajoute un magasin ou un endroit. Il apparaîtra ensuite dans le menu « Où acheter » des articles.</div>
         <div class="settings-store-row">
@@ -6489,8 +6497,8 @@ body.home-mode .hero-poster-image {
           <button type="button" class="secondary install-app-button" onclick="showInstallHelp()">Installer l'application</button>
           <div class="version-visible-card">
             <div class="version-visible-title">Version installée</div>
-            <div class="version-visible-number">version 2.0.74</div>
-            <div class="version-visible-small">Cache : v82</div>
+            <div class="version-visible-number">version 2.0.75</div>
+            <div class="version-visible-small">Cache : v83</div>
           </div>
           <button type="button" class="secondary update-app-button" onclick="testerFenetreMiseAJour()">Tester l’avertissement de mise à jour</button>
           <button type="button" class="secondary update-app-button" onclick="forceAppUpdate()">Forcer la mise à jour</button>
@@ -7123,6 +7131,8 @@ function openSettings() {
   document.getElementById("childCount").value = config.children.length;
   document.getElementById("showArticleNames").checked = false;
   document.getElementById("showStoreSelect").checked = config.showStoreSelect !== false;
+  const themeSelect = document.getElementById("themeSelect");
+  if (themeSelect) themeSelect.value = getAppTheme();
   overlay.dataset.parents = JSON.stringify(config.parents);
   overlay.dataset.children = JSON.stringify(config.children);
 
@@ -10614,7 +10624,7 @@ SYSTÈME SIMPLE DE VERSION — VERSION CORRIGÉE
 IMPORTANT : la fenêtre est créée en bas de page et utilise des ID uniques.
 -------------------------------------------------------------------------------
 */
-const APP_VERSION = "2.0.74";
+const APP_VERSION = "2.0.75";
 
 function parseVersionNumber(version) {
   return String(version || "0").split(".").map(part => parseInt(part, 10) || 0);
@@ -10836,15 +10846,15 @@ VERSIONS DANS PARAMÈTRES
 La vérification de mise à jour compare APP_VERSION avec version.json.
 -------------------------------------------------------------------------------
 */
-const APP_CACHE_VERSION = "v82";
-const APP_CACHE_NAME = "ma-liste-epicerie-v82";
+const APP_CACHE_VERSION = "v83";
+const APP_CACHE_NAME = "ma-liste-epicerie-v83";
 
 async function updateSettingsVersionInfo() {
   const appEl = document.getElementById("settingsAppVersion");
   const latestEl = document.getElementById("settingsLatestVersion");
   const cacheEl = document.getElementById("settingsCacheVersion");
 
-  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.74");
+  if (appEl) appEl.textContent = "version " + (typeof APP_VERSION !== "undefined" ? APP_VERSION : "2.0.75");
   if (cacheEl) cacheEl.textContent = APP_CACHE_VERSION;
 
   if (!latestEl) return;
@@ -10896,8 +10906,8 @@ function ensureVersionVisibleInSettings() {
       <div class="about-app-title">Ma liste d'épicerie</div>
       <div class="version-visible-card">
         <div class="version-visible-title">Version installée</div>
-        <div class="version-visible-number">version 2.0.74</div>
-        <div class="version-visible-small">Cache : v82</div>
+        <div class="version-visible-number">version 2.0.75</div>
+        <div class="version-visible-small">Cache : v83</div>
       </div>
     </div>
   `;
@@ -12276,6 +12286,60 @@ body.settings-open #settingsOverlay .settings-box {
 
     alert('Pour installer l’application : ouvre le menu de ton navigateur, puis choisis « Installer l’application » ou « Ajouter à l’écran d’accueil ».');
   };
+})();
+</script>
+
+
+<style>
+/* v2.0.75 - Thèmes de couleur */
+body[data-app-theme="blue"] {
+  --blue:#1d63b7;
+  --dark:#12345f;
+  --light:#eef6ff;
+  --border:#b8cee8;
+  --bg:#eef6ff;
+  --green:#1668c7;
+  background:linear-gradient(180deg, #eaf4ff 0%, #f7fbff 260px, #eef6ff 100%) !important;
+}
+body[data-app-theme="blue"] header {
+  background:linear-gradient(180deg, #d7ecff 0%, #9cccf7 48%, #5ea6e8 100%) !important;
+  border-bottom-color:#3f8bd5 !important;
+}
+body[data-app-theme="blue"] .subtitle { color:#244f7a !important; }
+body[data-app-theme="blue"] .category-header,
+body[data-app-theme="blue"] button.primary,
+body[data-app-theme="blue"] .alpha-bar button.active {
+  background:#1d63b7 !important;
+  border-color:#1d63b7 !important;
+  color:#fff !important;
+}
+body[data-app-theme="blue"] .settings-section {
+  background:#f2f8ff !important;
+  border-color:#b8cee8 !important;
+}
+body[data-app-theme="blue"] .settings-section h3,
+body[data-app-theme="blue"] .settings-collapse-header span:first-child {
+  color:#1d63b7 !important;
+}
+</style>
+<script>
+/* v2.0.75 - Thème de couleur */
+(function(){
+  const THEME_KEY = "ma_liste_epicerie_theme";
+  window.getAppTheme = function(){
+    try { return localStorage.getItem(THEME_KEY) || "green-yellow"; }
+    catch(e) { return "green-yellow"; }
+  };
+  window.applyAppTheme = function(theme){
+    const selectedTheme = theme === "blue" ? "blue" : "green-yellow";
+    document.body.setAttribute("data-app-theme", selectedTheme);
+  };
+  window.setAppTheme = function(theme){
+    const selectedTheme = theme === "blue" ? "blue" : "green-yellow";
+    try { localStorage.setItem(THEME_KEY, selectedTheme); } catch(e) {}
+    window.applyAppTheme(selectedTheme);
+  };
+  window.applyAppTheme(window.getAppTheme());
 })();
 </script>
 
