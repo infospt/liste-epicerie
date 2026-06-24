@@ -1,6 +1,6 @@
 {
-  "name": "Ma liste d'épicerie",
-  "short_name": "Épicerie",
+  "name": "Ma liste de courses",
+  "short_name": "Courses",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080A08",
